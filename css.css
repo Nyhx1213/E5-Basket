@@ -112,6 +112,11 @@ form p {
   margin-top: 10px;
 }
 
+.form-text{
+  font-size:12px;
+  margin-top:-20px;
+}
+
 a {
   color: #333;
   text-decoration: none;
@@ -295,6 +300,12 @@ h1 {
   font-weight: bold;
   color: #ffcc00;
   margin-bottom: 20px;
+}
+
+.title{
+  font-size: 48px;
+  font-weight: bold;
+  text-align: center;
 }
 
 p {
