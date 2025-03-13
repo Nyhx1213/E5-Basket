@@ -13,5 +13,11 @@ require_once "permission.inc.php";
     </head>
 
     <body>
-        
+        <?php
+            if (isset($_GET['idRencontre']) && !empty($_GET['idRencontre'])){
+                $sqlchart= 'SELECT Scoreteam1, Scoreteam2 FROM Rencontre
+                            WHERE RencontreID = :id';
+                            
+            }
+        ?>
     </body>
