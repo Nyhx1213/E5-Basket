@@ -4,7 +4,7 @@ require_once "connect.php";
 $db = new PDO(DNS, LOGIN, PASSWORD, $options);
 include "permission.inc.php";
 ?>
-<!DOCTYPE html> 
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <link rel="Stylesheet" href="css.css">
