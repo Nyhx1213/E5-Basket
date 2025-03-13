@@ -48,15 +48,7 @@ include "permission.inc.php";
             $sqlteam1 = 'SELECT * FROM Equipe ';
             $statementteam1 = $db->prepare($sqlteam1);
             $statementteam1->execute(); // Selects all the teams in the form
-            
-            $sql = 'INSERT INTO Rencontre (DateRencontre, ScoreEquipe1, ScoreEquipe2, Lieu) 
-                    VALUES (:gamedate, :scoreteam1, :scoreteam2, :gamelocation)'; // insertion into rencontre
-            $statement = $db->prepare($sql);
-            $statement->bindParam(':gamedate', $_POST['gamedate']);
-            $statement->bindParam(':scoreteam1', $scoreteam1);
-            $statement->bindParam(':scoreteam2', $scoreteam2);
-            $statement->bindParam(':gamelocation', $_POST['gamelocation']); // Preparing to insert data I will get later.
-            
+    
             // Form for selecting the first team
             echo 
             '<div>
@@ -70,8 +62,9 @@ include "permission.inc.php";
             }
             echo '
                     </select>
-                    <label for="scoreteam1">First Team Score</label>
-                    <input type="number" id="scoreteam1" name="scoreteam1" required>
+                    <label for="scoreteam1">Score</label>
+                    <input type="number" id="scoreteam1" name="scoreteam1">
+                    <p class="form-text">(the input of a score may be filled at a later date)</p>
                     <input type="submit" value="Submit">
                 </form>
             </div>';
@@ -113,8 +106,9 @@ include "permission.inc.php";
                         }
                         echo 
                         '</select>
-                        <label for="scoreteam2">Second Team Score</label>
-                        <input type="number" id="scoreteam2" name="scoreteam2" required>
+                        <label for="scoreteam2">Score</label>
+                        <input type="number" id="scoreteam2" name="scoreteam2">
+                        <p class="form-text">(the input of a score may be filled at a later date)</p> 
                         <label for="gamedate">Game Date</label>
                         <input type="datetime-local" id="gamedate" name="gamedate" max="9999-12-31T23:59" required>
                         <label for="gamelocation">Game Location</label>
@@ -152,77 +146,105 @@ include "permission.inc.php";
                             echo '<h2 class="message success>Please input a valid date and ensure the game duration is not more than 1 year from now.</h2>';
                         } 
                         else {
-                    $statement->execute(); // Creates the game
-                    
-                    // After game creation, insert into the JOUER table and set winners/losers
-                    $lastID = $db->lastInsertId(); // Get the game ID
-                    
-                    $sql2 = 'INSERT INTO JOUER (RencontreID, EquipeID, EST_GAGNANT) VALUES (:rencontreid, :equipeid, :win)';
-                    $statement2 = $db->prepare($sql2);
-                    $statement2->bindParam(':rencontreid', $lastID); 
-                    
-                    $sqlplayers = 'SELECT M.MembreID FROM Membre as M 
-                                   INNER JOIN MembresEquipe as ME ON M.MembreID = ME.MembreID
-                                   INNER JOIN Equipe as E ON ME.EquipeID = E.EquipeID
-                                   WHERE E.EquipeID = :equipeid1 OR E.EquipeID = :equipeid2
-                                   ORDER BY M.MembreID ASC';
 
-                    $statementplayers = $db->prepare($sqlplayers);
-                    $statementplayers->bindParam(':equipeid1', $teamname1);
-                    $statementplayers->bindParam(':equipeid2', $teamname2);
-                    $statementplayers->execute(); 
-                    
-                    $sqlinsert = 'INSERT INTO PERFORMANCE (MembreID, RencontreID, Points, Assists, Rebonds, MinutesJouees)
-                                  VALUES (:mID, :rencontreid, :points, :assists, :rebounds, :mjouer)';
-                    $statementinsert = $db->prepare($sqlinsert);
-                    
-                    while ($row = $statementplayers->fetch()) {
-                        $points = rand(0, 40);
-                        $assists = rand(1, 20);
-                        $rebounds = rand(1, 20);
-                        $fourty = 40;
-                        
-                        $statementinsert->bindParam(':mID', $row['MembreID']);
-                        $statementinsert->bindParam(':rencontreid', $lastID);
-                        $statementinsert->bindParam(':points', $points);
-                        $statementinsert->bindParam(':assists', $assists);
-                        $statementinsert->bindParam(':rebounds', $rebounds);
-                        $statementinsert->bindParam(':mjouer', $fourty);
-                        $statementinsert->execute();
+                            $sql = 'INSERT INTO Rencontre (DateRencontre, ScoreEquipe1, ScoreEquipe2, Lieu) 
+                            VALUES (:gamedate, :scoreteam1, :scoreteam2, :gamelocation)'; // Inserts into the database
+                            $statement = $db->prepare($sql);
+                            $statement->bindParam(':gamedate', $_POST['gamedate']);
+                            
+                            //Adds scores if it exist
+                            if (isset ($_POST['scoreteam1'])){
+                                $statement->bindParam(':scoreteam1', $scoreteam1);
+                            }
+                            //Adds score if it exist 
+                            if (isset ($_POST['scoreteam2'])){
+                                $statement->bindParam(':scoreteam2', $scoreteam2);
+                            }
+
+                            $statement->bindParam(':gamelocation', $_POST['gamelocation']); // Preparing to insert data I will get later.
+                            $statement->execute(); // Creates the game
+
+                            if (isset($_POST['scoreteam1']) && isset($_POST['scoreteam2'])){
+                                             
+                            // After game creation, insert into the JOUER table and set winners/losers
+                            $lastID = $db->lastInsertId(); // Get the game ID
+                            
+                            $sql2 = 'INSERT INTO JOUER (RencontreID, EquipeID, Score, EST_GAGNANT) 
+                                     VALUES (:rencontreid, :equipeid, :score, :win)';
+
+                            $statement2 = $db->prepare($sql2);
+                            $statement2->bindParam(':rencontreid', $lastID); 
+                            
+                            $sqlplayers = 'SELECT M.MembreID FROM Membre as M 
+                                        INNER JOIN MembresEquipe as ME ON M.MembreID = ME.MembreID
+                                        INNER JOIN Equipe as E ON ME.EquipeID = E.EquipeID
+                                        WHERE E.EquipeID = :equipeid1 OR E.EquipeID = :equipeid2
+                                        ORDER BY M.MembreID ASC';
+
+                            $statementplayers = $db->prepare($sqlplayers);
+                            $statementplayers->bindParam(':equipeid1', $teamname1);
+                            $statementplayers->bindParam(':equipeid2', $teamname2);
+                            $statementplayers->execute(); 
+                            
+                            $sqlinsert = 'INSERT INTO PERFORMANCE (MembreID, RencontreID, Points, Assists, Rebonds, MinutesJouees)
+                                        VALUES (:mID, :rencontreid, :points, :assists, :rebounds, :mjouer)';
+                            $statementinsert = $db->prepare($sqlinsert);
+                            
+                            while ($row = $statementplayers->fetch()) {
+                                $points = rand(0, 40);
+                                $assists = rand(1, 20);
+                                $rebounds = rand(1, 20);
+                                $fourty = 40;
+                                
+                                $statementinsert->bindParam(':mID', $row['MembreID']);
+                                $statementinsert->bindParam(':rencontreid', $lastID);
+                                $statementinsert->bindParam(':points', $points);
+                                $statementinsert->bindParam(':assists', $assists);
+                                $statementinsert->bindParam(':rebounds', $rebounds);
+                                $statementinsert->bindParam(':mjouer', $fourty);
+                                $statementinsert->execute();
+                            }
+                            
+                            // Determining the winner and loser based on scores
+                            if ($scoreteam1 > $scoreteam2) {
+                                $statement2->bindParam(':equipeid', $teamname2); // Winner
+                                $statement2->bindParam(':score',$scoreteam1);
+                                $statement2->bindParam(':win', $one);
+                                $statement2->execute();
+                                $statement2->bindParam(':equipeid', $teamname1); // Loser
+                                $statement2->bindParam(':score',$scoreteam2);
+                                $statement2->bindParam(':win', $zero);
+                                $statement2->execute();
+                            } 
+                            else if ($scoreteam2 > $scoreteam1) {
+                                $statement2->bindParam(':equipeid', $teamname1); // Winner
+                                $statement2->bindParam(':score',$scoreteam2);
+                                $statement2->bindParam(':win', $one);
+                                $statement2->execute();
+                                $statement2->bindParam(':equipeid', $teamname2); // Loser
+                                $statement2->bindParam(':score',$scoreteam1);
+                                $statement2->bindParam(':win', $zero);
+                                $statement2->execute();
+                            } 
+                            else {
+                                // Tie
+                                $statement2->bindParam(':equipeid', $teamname1);
+                                $statement2->bindParam(':win', $minus);
+                                $statement2->bindParam(':score', $scoreteam2);
+                                $statement2->execute();
+                                $statement2->bindParam(':equipeid', $teamname2);
+                                $statement2->bindParam(':win', $minus);
+                                $statement2->bindParam(':score',$scoreteam1);
+                                $statement2->execute();
+                            }
+                        }
+                            echo '<h2 class="message success">The game has been successfully added!</h2>';
                     }
-                    
-                    // Determining the winner and loser based on scores
-                    if ($scoreteam1 > $scoreteam2) {
-                        $statement2->bindParam(':equipeid', $teamname2); // Winner
-                        $statement2->bindParam(':win', $one);
-                        $statement2->execute();
-                        $statement2->bindParam(':equipeid', $teamname1); // Loser
-                        $statement2->bindParam(':win', $zero);
-                        $statement2->execute();
-                    } 
-                    else if ($scoreteam2 > $scoreteam1) {
-                        $statement2->bindParam(':equipeid', $teamname1); // Winner
-                        $statement2->bindParam(':win', $one);
-                        $statement2->execute();
-                        $statement2->bindParam(':equipeid', $teamname2); // Loser
-                        $statement2->bindParam(':win', $zero);
-                        $statement2->execute();
-                    } 
-                    else {
-                        // Tie
-                        $statement2->bindParam(':equipeid', $teamname1);
-                        $statement2->bindParam(':win', $minus);
-                        $statement2->execute();
-                        $statement2->bindParam(':equipeid', $teamname2);
-                        $statement2->bindParam(':win', $minus);
-                        $statement2->execute();
-                    }
-                    echo '<h2 class="message success">The game has been successfully added!</h2>';
-                }
                 }
             }
         }
-    } catch (PDOException $e) {
+    } 
+    catch (PDOException $e) {
         echo '<h3>Error: ' . $e->getMessage() . '</h3>';
     }
     $db = null;
