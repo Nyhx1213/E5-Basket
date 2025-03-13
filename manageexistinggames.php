@@ -69,10 +69,10 @@ require_once "permission.inc.php";
                     <td>'.$row['DateRencontre'].'</td>
                     <td>'.$row['Equipe1'].'-'.$row['Equipe2'].'</td>
                     <td>'.$row['Lieu'].'</td>
-                    <td><a href="modifygame.php?idRencontre='.$row['RencontreID'].'">Link</a></td>
+                    <td><a href="modify.php?idRencontre='.$row['RencontreID'].'">Link</a></td>
                 <tr>';
             }
-            $statementchart-closeCursor;
+            $statementchart->closeCursor();
             $db=null;
         ?>
     </table>
