@@ -45,11 +45,11 @@ include "permission.inc.php";
     if(isset($_GET['match'])){
 
         $sql= 'SELECT M.Nom, P.Points, P.Assists, P.Rebonds, P.MinutesJouees as MJ, E.NomEquipe as N
-           FROM PERFORMANCE as P 
-           INNER JOIN Membre as M ON P.MembreID=M.MembreID
-           INNER JOIN MembresEquipe as ME ON M.MembreID=ME.MembreID
-           INNER JOIN Equipe as E ON ME.EquipeID=E.EquipeID
-           WHERE P.RencontreID=:rID'; //Makes it so it selects data based on the team the member is in based on the match I chose.
+               FROM PERFORMANCE as P 
+               INNER JOIN Membre as M ON P.MembreID=M.MembreID
+               INNER JOIN MembresEquipe as ME ON M.MembreID=ME.MembreID
+               INNER JOIN Equipe as E ON ME.EquipeID=E.EquipeID
+               WHERE P.RencontreID=:rID'; //Makes it so it selects data based on the team the member is in based on the match I chose.
         $statement= $db->prepare($sql);
         $statement->bindParam(':rID',$_GET['match']); 
         $statement->execute();
