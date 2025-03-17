@@ -53,10 +53,20 @@ require_once "permission.inc.php";
                 $statementchart->bindParam(":id",$_GET['idRencontre']);
                 $statementchart->execute();
                 
-                $sqlinsertrencontre = 'INSERT INTO Rencontre (Scoreteam1, Scoreteam2) Values(:score1, :score2)';
+                $sqlinsertrencontre = 'UPDATE Rencontre
+                                       SET ScoreEquipe1 = :score1
+                                       SET ScoreEquipe2 = :score2';
                 
-                $sqlinsertjouer = 'INSERT INTO JOUER (Score' ; 
+                $sqlinsertjouer = 'UPDATE JOUER 
+                                   SET Score = :score 
+                                   WHERE EquipeID = :equipeid AND RencontreID = :rencontreid' ; 
+
+                $statementinsertjouer = $db->prepare($sqlinsertjouer);
                 
+                $statementinsertrencontre = $db->prepare($sqlinsertrencontre);
+                $statementinsertrencontre->bindParam(':score1',$_POST['scoreteam1']);
+                $statementinsertrencontre->bindParam(':score2',$_POST['scoreteam2']);
+
                 $row = $statementchart->fetch();
 
                 echo'
@@ -73,11 +83,24 @@ require_once "permission.inc.php";
                         
                         <label for="scoreteam2"> Insert Score </label>
                     <input type="number" id="scoreteam2" name="scoreteam2">
+                    <input type="hidden" name="idrencontre" id="idrencontre" value="'.$_GET['idRencontre'].'">
                     <input type="submit" value="Submit">
                 </form>';
+                
+                //If variables from my form are not empty and are set.
+                //if ((isset($_POST['scoreteam1']) && !empty($_POST['scoreteam1'])) && (isset($_POST['scoreteam2']) && !empty($_POST['scoreteam2']))){
+                if(isset($_POST['submit'])){ 
+                    $statementinsertjouer->bindParam(':score',$_POST['scoreteam1']);
+                    $statementinsertjouer->bindParam(':equipeid',$_POST['team1']);
+                    $statementinsertjouer->bindParam(':rencontreid',$_GET['idRencontre']);
 
-                if (isset($_POST['submit'])){
-                    
+                    $statementinsertrencontre->execute();
+
+                    $statementinsertjouer->execute();
+
+                    $statementinsertjouer->bindParam(':score',$_POST['scoreteam2']);
+                    $statementinsertjouer->bindParam(':equipeid',$_POST['team2']);
+                    $statementinsertjouer->execute();
                 }
                 }
             ?>
