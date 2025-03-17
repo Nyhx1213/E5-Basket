@@ -48,30 +48,34 @@ require_once "permission.inc.php";
                 <th>Lieu</th>
                 <th>Modifier</th>
             </tr>
-        <?php
-            $sqlchart = 'SELECT R.DateRencontre, R.Lieu, E.NomEquipe as Equipe1, E.NomEquipe as Equipe2 FROM Rencontre as R
-                    INNER JOIN JOUER as J ON R.RencontreID = J.RencontreID
-                    INNER JOIN Equipe as E ON J.EquipeID = E.EquipeID
-                    WHERE J.Score = null';
-                    
+        <?php   
+            /*The SQL Query below is going to get the names of each team that has no score implemented yet in a table. 
+              The link on the side sends the user to a form where he can add a score to the matches. */
+
+            $sqlchart = 'SELECT  R.RencontreID ,R.DateRencontre, R.Lieu, E1.NomEquipe as Equipe1, E2.NomEquipe as Equipe2 FROM Rencontre as R
+                         INNER JOIN JOUER as J1 ON R.RencontreID = J1.RencontreID
+                         INNER JOIN Equipe as E1 ON J1.EquipeID = E1.EquipeID
+                         INNER JOIN JOUER as J2 ON R.RencontreID = J2.RencontreID
+                         INNER JOIN Equipe as E2 ON J2.EquipeID = E2.EquipeID
+                         WHERE (J1.Score IS NULL OR J2.Score IS NULL) AND J1.EquipeID > J2.EquipeID
+                         ORDER BY R.DateRencontre desc';
+
             $statementchart= $db->prepare($sqlchart);
             $statementchart->execute();
 
             while($row=$statementchart->fetch()){
                 echo
                 '<tr>
-                    <td>'.$row['R.DateRencontre'].'</td>
-                    <td>.'.$row['Equipe1'].'-'.$row['Equipe2'].'</td>
-                    <td>.'.$row['R.Lieu'].'</td>
-                    <td> link </td>
+                    <td>'.$row['DateRencontre'].'</td>
+                    <td>'.$row['Equipe1'].'-'.$row['Equipe2'].'</td>
+                    <td>'.$row['Lieu'].'</td>
+                    <td><a href="modify.php?idRencontre='.$row['RencontreID'].'">Link</a></td>
                 <tr>';
             }
-
-
+            $statementchart->closeCursor();
+            $db=null;
         ?>
     </table>
-
-
 </main>
 </body>
 </html>

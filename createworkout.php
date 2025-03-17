@@ -38,59 +38,59 @@ $db = null;
 
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="css.css">
-    <link rel="stylesheet" href="pico.min.css">
-    <title>Create Workout</title>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="css.css">
+        <link rel="stylesheet" href="pico.min.css">
+        <title>Create Workout</title>
+    </head>
 
-<body>
-<header>
-    <nav>
-    <ul>
-        <li>
-        <?php if(isset($_SESSION['login'])){
-                echo'<a href="profile.php">Welcome '.$_SESSION['login'].'</a>';
-            }
-        ?>
-        </li>
-    </ul>
-    <ul>
-        <li>
-            <strong><a href="index.php">Basketball Management Application</a></strong>
-        </li>
-    </ul>
-    <ul>
-        <li> 
-            <?php if(isset($_SESSION['login'])){
-                echo'<a href="disconnect.php"> Disconnect</a>';
-            }
-                else echo '<a href="index.php">Login</a>';
-            ?>
-        </li>
-    </ul>
-    </nav>
-</header>
-    <main>
-        <section>
-            <?php if (isset($_POST['workoutdate']) && $workoutcreated == true) {
-                echo '<div class="message success"> Your workout has been created !</div>';
-            } else if (isset($_POST['workoutdate']) && $workoutcreated == false) {
-                echo '<div class="message error">Please input a valid date and a valid duration</div>';
-            } ?>
-            <form action="createworkout.php" method="post" class="workout-form">
-                <label for="workoutname">Name your workout</label>
-                <input type="text" id="workoutname" name="workoutname" required>
+    <body>
+        <header>
+            <nav>
+            <ul>
+                <li>
+                <?php if(isset($_SESSION['login'])){
+                        echo'<a href="profile.php">Welcome '.$_SESSION['login'].'</a>';
+                    }
+                ?>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <strong><a href="index.php">Basketball Management Application</a></strong>
+                </li>
+            </ul>
+            <ul>
+                <li> 
+                    <?php if(isset($_SESSION['login'])){
+                        echo'<a href="disconnect.php"> Disconnect</a>';
+                    }
+                        else echo '<a href="index.php">Login</a>';
+                    ?>
+                </li>
+            </ul>
+            </nav>
+        </header>
+        <main>
+            <section>
+                <?php if (isset($_POST['workoutdate']) && $workoutcreated == true) {
+                    echo '<div class="message success"> Your workout has been created !</div>';
+                } else if (isset($_POST['workoutdate']) && $workoutcreated == false) {
+                    echo '<div class="message error">Please input a valid date and a valid duration</div>';
+                } ?>
+                <form action="createworkout.php" method="post" class="workout-form">
+                    <label for="workoutname">Name your workout</label>
+                    <input type="text" id="workoutname" name="workoutname" required>
 
-                <label for="workoutlength">The length of the workout (in hours)</label>
-                <input type="number" id="workoutlength" name="workoutlength" min="1" max="8" required>
+                    <label for="workoutlength">The length of the workout (in hours)</label>
+                    <input type="number" id="workoutlength" name="workoutlength" min="1" max="8" required>
 
-                <label for="workoutdate">Date of the workout</label>
-                <input type="datetime-local" id="workoutdate" name="workoutdate" max="9999-12-31T23:59" required>
-                <input type="submit" value="Submit" class="submit-btn">
-            </form>
-        </section>
-    </main>
-</body>
+                    <label for="workoutdate">Date of the workout</label>
+                    <input type="datetime-local" id="workoutdate" name="workoutdate" max="9999-12-31T23:59" required>
+                    <input type="submit" value="Submit" class="submit-btn">
+                </form>
+            </section>
+        </main>
+    </body>
 </html>
