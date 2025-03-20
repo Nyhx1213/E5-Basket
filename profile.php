@@ -1,13 +1,27 @@
 <?php 
-    session_start();
-    require_once "connect.php";
-    $db = new PDO(DNS, LOGIN, PASSWORD, $options);
-    include "permission.inc.php";
+session_start();
+require_once "connect.php";
+$db = new PDO(DNS, LOGIN, PASSWORD, $options);
+include "permission.inc.php";
+try {
+
+    $sqlinformation = 'SELECT * FROM Users';
+    
+    $statementinformation= $db->prepare($sqlinformation);
+    $statementinformation->execute();
+    $row = $statementinformation->fetch();
+    
+    $date = $row['DateCreation'];
+}
+catch (PDOException $e) {
+    echo '<div class="message error"><h2>Error: ' . $e->getMessage() . '</h2></div>';
+}
+
 ?>
 <html>
     <head>
+        <title> Profile </title>
         <meta charset="utf-8">
-        <title> Admin Panel </title>
         <link rel="stylesheet" href="css.css">
         <link rel="stylesheet" href="pico.min.css">
     </head>
@@ -19,6 +33,7 @@
                 <?php if(isset($_SESSION['login'])){
                         echo'<a href="profile.php">Welcome '.$_SESSION['login'].'</a>';
                     }
+                    else echo '';
                 ?>
                 </li>
             </ul>
@@ -39,7 +54,12 @@
             </nav>
         </header>
         <main>
-            
+            <div class="container"> 
+                    <h1><?php echo $_SESSION['login']?></h1>
+                    <h2>Date de creation de compte: <?php echo $date; ?> </h2>
+                    <h2>Adresse Mail: <?php echo $row['Mail'] </h2>
+
+            </div>
         </main>
     </body>
 </html>

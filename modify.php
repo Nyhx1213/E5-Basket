@@ -50,9 +50,9 @@ include "permission.inc.php";
                 /* This section joins up multiple tables to show which teams the user has selected.*/
                 $sqlchart = 'SELECT E1.NomEquipe as Equipe1, E2.NomEquipe as Equipe2, 
                              E1.EquipeID as ID1, E2.EquipeID as ID2, J1.Score as Score1,
-                             J2.Score as Score2 FROM JOUER as J1
+                             J2.Score as Score2 FROM Jouer as J1
                              INNER JOIN Equipe as E1 ON J1.EquipeID = E1.EquipeID
-                             INNER JOIN JOUER as J2 ON J1.RencontreID = J2.RencontreID 
+                             INNER JOIN Jouer as J2 ON J1.RencontreID = J2.RencontreID 
                              Inner JOIN Equipe as E2 ON J2.EquipeID = E2.EquipeID
                              WHERE J1.RencontreID = :id AND J1.EquipeID < J2.EquipeID';
 
@@ -133,7 +133,7 @@ include "permission.inc.php";
                                             WHERE RencontreID = :idRencontre AND (ScoreEquipe1 OR ScoreEquipe2 IS NULL)';
                         
                         // Updates JOUER Table
-                        $sqlupdatejouer = 'UPDATE JOUER 
+                        $sqlupdatejouer = 'UPDATE Jouer 
                                         SET Score = :score 
                                         WHERE EquipeID = :equipeid AND RencontreID = :idRencontre AND Score IS null' ; 
 
