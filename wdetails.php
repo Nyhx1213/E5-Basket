@@ -64,6 +64,7 @@ include "permission.inc.php";
                         <th>Length(H,M) <a href="wdetails.php?sort=3" class="arrow">&uarr;</a><a href="wdetails.php?sort=4" class="arrow">&darr;</a></th>
                         <th>Date <a href="wdetails.php?sort=5" class="arrow">&uarr;</a><a href="wdetails.php?sort=6" class="arrow">&darr;</a></th>
                         <th>info</th>
+                        <th>Delete</th>
                     </tr>';   
 
 
@@ -73,7 +74,8 @@ include "permission.inc.php";
                         <td>'.$row['TypeEntrainement'].'</td>
                         <td>'.$row['Duree'].'</td>
                         <td>'.$row['DateEntrainement'].'</td>
-                        <td> <a href="participants.php?workID='.$row['EntrainementID'].'">link</a> </td>  
+                        <td> <a href="participants.php?workID='.$row['EntrainementID'].'">link</a> </td>
+                        <td class="flexdisplay"><a href="deleteworkout.php?workid='.$row['EntrainementID'].'"><button class="button-suppression">X</button></a> </td>  
                     </tr>';
                 }
                 
