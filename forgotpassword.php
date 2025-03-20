@@ -67,10 +67,13 @@ session_start();
                             $stm->bindParam(':pid', $row['User_ID']);
                             $stm->execute();
 
+                            //Gets the path and the domain name of the hosted server. 
+                            $url = "http://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']);
+
                             // Send the email with the code
                             $to = $_POST['mail'];
                             $subject = 'Password Retrieval Link';
-                            $message = 'Click the link below to retrieve your password: https://yourwebsite.com/getpasswordcode.php?code=' . $code;
+                            $message = 'Click the link below to retrieve your password: '.$url.'getpasswordcode.php?code=' . $code;
                             $headers = array(
                                 'From' => 'do.not.reply@yourwebsite.com',
                                 'Reply-To' => 'do.not.reply@yourwebsite.com',

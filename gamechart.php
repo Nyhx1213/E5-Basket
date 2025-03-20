@@ -50,9 +50,9 @@ include "permission.inc.php";
                     $sql = 'SELECT E1.NomEquipe as e1, E2.NomEquipe as e2, R.ScoreEquipe1, R.ScoreEquipe2, 
                                 R.DateRencontre, J1.EST_GAGNANT as w1, J2.EST_GAGNANT as w2, R.RencontreID, R.Lieu
                             FROM Rencontre as R
-                            INNER JOIN JOUER as J1 ON R.RencontreID = J1.RencontreID
+                            INNER JOIN Jouer as J1 ON R.RencontreID = J1.RencontreID
                             INNER JOIN Equipe as E1 ON J1.EquipeID = E1.EquipeID
-                            INNER JOIN JOUER as J2 ON R.RencontreID = J2.RencontreID
+                            INNER JOIN Jouer as J2 ON R.RencontreID = J2.RencontreID
                             INNER JOIN Equipe as E2 ON J2.EquipeID = E2.EquipeID
                             WHERE J1.EquipeID > J2.EquipeID
                             ORDER BY R.DateRencontre DESC';
@@ -61,9 +61,9 @@ include "permission.inc.php";
                     $sql = 'SELECT E1.NomEquipe as e1, E2.NomEquipe as e2, R.ScoreEquipe1, R.ScoreEquipe2, 
                                 R.DateRencontre, J1.EST_GAGNANT as w1, J2.EST_GAGNANT as w2, R.RencontreID, R.Lieu
                             FROM Rencontre as R
-                            INNER JOIN JOUER as J1 ON R.RencontreID = J1.RencontreID
+                            INNER JOIN Jouer as J1 ON R.RencontreID = J1.RencontreID
                             INNER JOIN Equipe as E1 ON J1.EquipeID = E1.EquipeID
-                            INNER JOIN JOUER as J2 ON R.RencontreID = J2.RencontreID
+                            INNER JOIN Jouer as J2 ON R.RencontreID = J2.RencontreID
                             INNER JOIN Equipe as E2 ON J2.EquipeID = E2.EquipeID
                             WHERE J1.EquipeID > J2.EquipeID';
                     

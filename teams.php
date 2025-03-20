@@ -46,15 +46,15 @@ include "permission.inc.php";
             $statement= $db->prepare($sql);
 
             //This will enable me to get the number of victories.
-            $sqlWIN= 'SELECT count(EST_GAGNANT) FROM JOUER WHERE EquipeID=:equipeid AND EST_GAGNANT=1';
+            $sqlWIN= 'SELECT count(EST_GAGNANT) FROM Jouer WHERE EquipeID=:equipeid AND EST_GAGNANT=1';
             $statementWIN=$db->prepare($sqlWIN);
 
             //This will enable me to get the number of losses.
-            $sqlLOSS= 'SELECT count(EST_GAGNANT) FROM JOUER WHERE EquipeID=:equipeid AND EST_GAGNANT=0';
+            $sqlLOSS= 'SELECT count(EST_GAGNANT) FROM Jouer WHERE EquipeID=:equipeid AND EST_GAGNANT=0';
             $statementLOSS=$db->prepare($sqlLOSS);
 
             //This will enable me to get the number of ties.
-            $sqlTIE= 'SELECT count(EST_GAGNANT) FROM JOUER WHERE EquipeID=:equipeid AND EST_GAGNANT=-1';
+            $sqlTIE= 'SELECT count(EST_GAGNANT) FROM Jouer WHERE EquipeID=:equipeid AND EST_GAGNANT=-1';
             $statementTIE=$db->prepare($sqlTIE);
             
 

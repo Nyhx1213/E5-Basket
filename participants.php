@@ -44,8 +44,8 @@ include "permission.inc.php";
             try {  
                 if (isset($_GET['workID'])) {
                     //Takes the workout ID and shows the players that are in it by joining tables.
-                    $sql = 'SELECT * FROM Entrainement INNER JOIN PARTICIPER ON Entrainement.EntrainementID = PARTICIPER.EntrainementID
-                            INNER JOIN Membre ON PARTICIPER.MembreID = Membre.MembreID WHERE Entrainement.EntrainementID= :id'; //Joins Participer and entrainment to show data based on your wanted workout.
+                    $sql = 'SELECT * FROM Entrainement INNER JOIN Participer ON Entrainement.EntrainementID = Participer.EntrainementID
+                            INNER JOIN Membre ON Participer.MembreID = Membre.MembreID WHERE Entrainement.EntrainementID= :id'; //Joins Participer and entrainment to show data based on your wanted workout.
                     $statement = $db->prepare($sql);
                     $statement->bindParam(':id', $_GET['workID']);
                     $statement->execute();
