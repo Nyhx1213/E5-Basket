@@ -49,7 +49,7 @@ session_start();
             else {
                 $db = new PDO(DNS, LOGIN, PASSWORD, $options);
                 $sql = 'INSERT INTO Users (Login, Password, Mail, DateCreation) VALUES (:uID, :uMDP, :uMail, :uDatecreation)'; // Insertion query for users.
-                $sql2 = 'INSERT INTO DISPOSER (idRole, User_ID) VALUES (6, :userid)'; // Assigns user role.
+                $sql2 = 'INSERT INTO Disposer (idRole, User_ID) VALUES (6, :userid)'; // Assigns user role.
 
                 echo '
                 <div class="form-container">
@@ -75,31 +75,31 @@ session_start();
                     
                     $email = filter_var($_POST['mail'], FILTER_SANITIZE_EMAIL);
                     if (!filter_var($email, FILTER_VALIDATE_EMAIL) === false) { 
-                        $sqlcheckmail = 'SELECT Mail FROM Users 
+                        $sqlcheckmail = 'SELECT Mail  FROM Users 
                                          WHERE Mail = :mail';
                         
                         $statementcheckmail = $db->prepare($sqlcheckmail);
-                        $statementcheckmail->bindParam(':mail', $mail);
+                        $statementcheckmail->bindParam(':mail', $_POST['mail']);
                         $statementcheckmail->execute();
 
-                        $row = $statementcheckmail->fetch();
+                        $rowcountmail = $statementcheckmail->rowcount();
 
-                        if ($row){
-                            echo '<h1>The mail already exists</h1>';
+                        if ($rowcountmail == 1){
+                            echo '<h1 class="message-error">The mail already exists</h1>';
                             exit();
                         }
                         $statementcheckmail->closeCursor();
 
-                        $sqlchecklogin = 'SELECT Login FROM Users
+                        $sqlchecklogin = 'SELECT Login as Log FROM Users
                                           WHERE Login = :nom;';
                         $statementchecklogin = $db->prepare($sqlchecklogin);
                         $statementchecklogin->bindParam(':nom', $_POST['register']);
                         $statementchecklogin->execute();
                         
-                        $row = $statementchecklogin->fetch();
+                        $rowcountlog = $statementchecklogin->rowcount();
 
-                        if ($row) {
-                            echo '<h1> The username already exists </h1>';
+                        if ($rowcountlog == 1) {
+                            echo '<h1 class="message-error"> The username already exists </h1>';
                             exit();
                         }
 

@@ -69,6 +69,13 @@ h2 {
   margin-bottom: 10px;
 }
 
+.button-suppression{ 
+  font-size:12px;
+  padding: 12px;
+  align-items: center;
+  justify-content:center;
+}
+
 form {
   background-color: #fff;
   padding: 20px;
@@ -120,6 +127,11 @@ form p {
 a {
   color: #333;
   text-decoration: none;
+}
+
+.flexdisplay{
+  display:flex;
+  justify-content: center;
 }
 
 a:hover {
