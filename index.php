@@ -5,7 +5,13 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Login</title>
+        <?php if (isset($_SESSION['login'])) {
+                echo '<title>Home</title>';
+            }
+            else {
+                echo '<title>Login</title>';
+            }
+        ?>
         <link rel="stylesheet" href="pico.min.css">
         <link rel="stylesheet" href="css.css">
     </head>
@@ -72,18 +78,18 @@
 
                         if (password_verify($_POST['mdp'], $row['Password'])) { // Compare the entered password with the one in the database.
                             $_SESSION['login'] = $_POST['login'];
-                            $_SESSION['id']=$row['User_ID'];
+                            $_SESSION['id']=$row['UserID'];
                             header("Refresh:0");
                     } 
                     
                     else {
-                        echo '<p>Invalid password.</p>';
+                        echo '<p class="message error">Invalid password.</p>';
                     } 
 
                 } 
                 
                 else {
-                    echo '<p>Username not found.</p>';
+                    echo '<p class="message error">Username not found.</p>';
                 }
 
                 $statement->closeCursor();
@@ -100,6 +106,7 @@
             <div class="button-container"><a href="teams.php" class="contrast">Teams and Players charts</a></div>
             <div class="button-container"><a href="gamemanage.php" class="contrast">Manage Games</a></div>
             <div class="button-container"><a href="gamechart.php" class="contrast">Game Chart</a></div>
+            <div class="button-container"><a href="manageexistinggames.php" class="contrast">Modify Planned Games</a>
             </div>';
             }
             ?> 
