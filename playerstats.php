@@ -48,7 +48,7 @@ include "permission.inc.php";
                     //SQl request that links my player to his stats page inside of my database and the team name they are on.
 
                     $sql= 'SELECT M.Nom, M.Prenom, M.NumeroMaillot, M.Role, AVG(P.Points) AS Points, AVG(P.Assists) AS Assists, AVG(P.Rebonds) AS Rebounds
-                        FROM Membre M INNER JOIN PERFORMANCE P ON M.MembreID = P.MembreID
+                        FROM Membre M INNER JOIN Performance P ON M.MembreID = P.MembreID
                         INNER JOIN MembresEquipe ME ON M.MembreID = ME.MembreID
                         INNER JOIN Equipe E ON ME.EquipeID = E.EquipeID WHERE M.MembreID = :playerID';
                     $statement = $db->prepare($sql);
@@ -84,9 +84,9 @@ include "permission.inc.php";
                     J1.EST_GAGNANT AS W1, J2.EST_GAGNANT AS W2, E2.NomEquipe AS E2 FROM Membre AS M
                     INNER JOIN MembresEquipe AS ME ON M.MembreID = ME.MembreID
                     INNER JOIN Equipe AS E1 ON ME.EquipeID = E1.EquipeID  
-                    INNER JOIN JOUER AS J1 ON J1.EquipeID = E1.EquipeID  
+                    INNER JOIN Jouer AS J1 ON J1.EquipeID = E1.EquipeID  
                     INNER JOIN Rencontre AS R ON J1.RencontreID = R.RencontreID  
-                    INNER JOIN JOUER AS J2 ON J2.RencontreID = R.RencontreID  
+                    INNER JOIN Jouer AS J2 ON J2.RencontreID = R.RencontreID  
                     INNER JOIN Equipe AS E2 ON J2.EquipeID = E2.EquipeID  
                     WHERE M.MembreID = :id  AND J1.EquipeID != J2.EquipeID  
                     ORDER BY R.DateRencontre DESC';

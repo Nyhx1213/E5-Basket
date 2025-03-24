@@ -69,6 +69,13 @@ h2 {
   margin-bottom: 10px;
 }
 
+.button-suppression{ 
+  font-size:12px;
+  padding: 12px;
+  align-items: center;
+  justify-content:center;
+}
+
 form {
   background-color: #fff;
   padding: 20px;
@@ -120,6 +127,11 @@ form p {
 a {
   color: #333;
   text-decoration: none;
+}
+
+.flexdisplay{
+  display:flex;
+  justify-content: center;
 }
 
 a:hover {
@@ -290,6 +302,25 @@ table a:hover {
   margin: 0 auto;
   text-align: center;
   padding: 50px 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.centercontainer {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  height:60vh;
+
+}
+
+.tinycontainer {
+  width: 50%;
+  max-width:300px;
+  margin: 0 auto;
+  text-align: center;
+  padding:30px 20px;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);

@@ -169,7 +169,7 @@ include "permission.inc.php";
                             // After game creation, insert into the JOUER table and set winners/losers
                             $lastID = $db->lastInsertId(); // Get the game ID
                             
-                            $sql2 = 'INSERT INTO JOUER (RencontreID, EquipeID, Score, EST_GAGNANT) 
+                            $sql2 = 'INSERT INTO Jouer (RencontreID, EquipeID, Score, EST_GAGNANT) 
                                      VALUES (:rencontreid, :equipeid, :score, :win)';
 
                             $statement2 = $db->prepare($sql2);
@@ -186,7 +186,7 @@ include "permission.inc.php";
                             $statementplayers->bindParam(':equipeid2', $teamname2);
                             $statementplayers->execute(); 
                             
-                            $sqlinsert = 'INSERT INTO PERFORMANCE (MembreID, RencontreID, Points, Assists, Rebonds, MinutesJouees)
+                            $sqlinsert = 'INSERT INTO Performance (MembreID, RencontreID, Points, Assists, Rebonds, MinutesJouees)
                                         VALUES (:mID, :rencontreid, :points, :assists, :rebounds, :mjouer)';
                             $statementinsert = $db->prepare($sqlinsert);
                             

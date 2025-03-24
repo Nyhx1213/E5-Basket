@@ -113,8 +113,8 @@ include "permission.inc.php";
                             else {
 
                                 $sqlT = 'SELECT * FROM Entrainement WHERE EntrainementID 
-                            NOT IN (SELECT EntrainementID FROM PARTICIPER INNER JOIN Membre ON PARTICIPER.MembreID = Membre.MembreID 
-                                    WHERE PARTICIPER.MembreID=:playerID) '; 
+                            NOT IN (SELECT EntrainementID FROM Participer INNER JOIN Membre ON Participer.MembreID = Membre.MembreID 
+                                    WHERE Participer.MembreID=:playerID) '; 
 
             //Above ensures that the program won't pick a player that is already in a workout. 
                             $statementT=$db->prepare($sqlT);
@@ -159,7 +159,7 @@ include "permission.inc.php";
                                 $statementName->bindParam(':id',$_POST['player']);
                                 $statementName->execute();
                                 
-                                $sqlW = 'INSERT INTO PARTICIPER(EntrainementID, MembreID) 
+                                $sqlW = 'INSERT INTO Participer(EntrainementID, MembreID) 
                             Values 
                                 (:workID, :playerID)';
                             $statementW = $db->prepare($sqlW);
