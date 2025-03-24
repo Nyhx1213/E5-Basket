@@ -49,7 +49,7 @@ session_start();
             else {
                 $db = new PDO(DNS, LOGIN, PASSWORD, $options);
                 $sql = 'INSERT INTO Users (Login, Password, Mail, DateCreation) VALUES (:uID, :uMDP, :uMail, :uDatecreation)'; // Insertion query for users.
-                $sql2 = 'INSERT INTO Disposer (idRole, User_ID) VALUES (6, :userid)'; // Assigns user role.
+                $sql2 = 'INSERT INTO Disposer (RoleID, UserID) VALUES (6, :userid)'; // Assigns user role.
 
                 echo '
                 <div class="form-container">

@@ -85,6 +85,7 @@ include "permission.inc.php";
                             <th>Equipe 2</th>
                             <th>Lieu</th>
                             <th>Performance</th>
+                            <th>Delete</th>
                         </tr>';
 
                 // Display games data
@@ -101,6 +102,7 @@ include "permission.inc.php";
                                 <td>'.$row['e2'].'</td>
                                 <td>'.$row['Lieu'].'</td>
                                 <td><a href="performance.php?match='.$row['RencontreID'].'">Performance</a></td>
+                                <td><a href="deletegame.php?gameid='.$row['RencontreID'].'"><button class="button-suppression">X</button></a></td>
                             </tr>';
                         }
                         else {
@@ -112,6 +114,7 @@ include "permission.inc.php";
                                 <td>' . $row['e2'] . '</td>
                                 <td>' . $row['Lieu'] . '</td>
                                 <td><a href="performance.php?match=' . $row['RencontreID'] . '">Performance</a></td>
+                                <td><a href="deletegame.php?gameid='.$row['RencontreID'].'"><button class="button-suppression">X</button></a></td>
                             </tr>';
                         }
                     } 
@@ -126,6 +129,7 @@ include "permission.inc.php";
                                 <td>' . $row['e1'] . '</td>
                                 <td>' . $row['Lieu'] . '</td>
                                 <td><a href="performance.php?match=' . $row['RencontreID'] . '">Performance</a></td>
+                                <td><a href="deletegame.php?gameid='.$row['RencontreID'].'"><button class="button-suppression">X</button></a></td>
                             </tr>';
                         } 
                         else {
@@ -137,6 +141,7 @@ include "permission.inc.php";
                                 <td>' . $row['e1'] . '</td>
                                 <td>' . $row['Lieu'] . '</td>
                                 <td><a href="performance.php?match=' . $row['RencontreID'] . '">Performance</a></td>
+                                <td><a href="deletegame.php?gameid='.$row['RencontreID'].'"><button class="button-suppression">X</button></a></td>
                             </tr>';
                         }
                     } 
@@ -150,6 +155,7 @@ include "permission.inc.php";
                             <td>' . $row['e2'] . '</td>
                             <td>' . $row['Lieu'] . '</td>
                             <td><a href="performance.php?match=' . $row['RencontreID'] . '">Performance</a></td>
+                            <td><a href="deletegame.php?gameid='.$row['RencontreID'].'"><button class="button-suppression">X</button></a></td>
                         </tr>';
                     }
                 }

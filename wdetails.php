@@ -43,7 +43,7 @@ include "permission.inc.php";
             <?php
                 $sqlR='SELECT * FROM Entrainement';
                 if(isset($_GET['sort'])){
-                    
+                    //Orders by arrows
                     switch($_GET['sort']){
                         case 1: $sqlR .=' ORDER BY TypeEntrainement'; break;
                         case 2: $sqlR .=' ORDER BY TypeEntrainement DESC'; break;
@@ -52,6 +52,11 @@ include "permission.inc.php";
                         case 5: $sqlR .=' ORDER BY DateEntrainement'; break;
                         case 6: $sqlR .=' ORDER BY DateEntrainement DESC'; break;
                     } 
+                }
+                
+                else {
+                    //If no arrow selected orders by date
+                    $sqlR .=' ORDER BY DateEntrainement DESC';
                 }
                 
                 $statementR= $db->prepare($sqlR);
