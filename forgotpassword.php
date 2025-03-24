@@ -55,7 +55,7 @@ session_start();
                             $code = bin2hex($bytes);
 
                             // Update the user's data to store the code and expiration date
-                            $stm = $db->prepare('UPDATE Users SET Code = :code, DateExp = :pdate WHERE User_ID = :pid');
+                            $stm = $db->prepare('UPDATE Users SET Code = :code, DateExp = :pdate WHERE UserID = :pid');
                             $date = new DateTime(date('Y-m-d H:i:s'));
                             $date->add(new DateInterval('PT2H')); // 2-hour expiration time
                             $date_str = $date->format('Y-m-d H:i:s');
@@ -64,7 +64,7 @@ session_start();
                             // Bind parameters and execute the statement
                             $stm->bindParam(':pdate', $date_str);
                             $stm->bindParam(':code', $code);
-                            $stm->bindParam(':pid', $row['User_ID']);
+                            $stm->bindParam(':pid', $row['UserID']);
                             $stm->execute();
 
                             //Gets the path and the domain name of the hosted server. 

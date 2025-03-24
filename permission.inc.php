@@ -4,11 +4,11 @@ try{
     //to a 403 page if it has no access.
 
     $page=basename($_SERVER['SCRIPT_FILENAME']); //Retrieves the name of the page
-    $sqlPerm = 'SELECT count(A.idPage) FROM Acceder as A
-    INNER JOIN Disposer as D on A.idRole = D.idRole
-    INNER JOIN Page as P on A.idPage = P.idPage
-    INNER JOIN Users as C on D.User_ID = C.User_ID
-    WHERE C.User_ID = :id AND P.NomPage = :nompage';
+    $sqlPerm = 'SELECT count(A.PageID) FROM Acceder as A
+    INNER JOIN Disposer as D on A.RoleID = D.RoleID
+    INNER JOIN Page as P on A.PageID = P.PageID
+    INNER JOIN Users as C on D.UserID = C.UserID
+    WHERE C.UserID = :id AND P.NomPage = :nompage';
 
     $statementPerm = $db->prepare($sqlPerm);
     $statementPerm->bindParam(":id",$_SESSION['id']);
