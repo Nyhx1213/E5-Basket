@@ -5,7 +5,7 @@ $db = new PDO(DNS, LOGIN, PASSWORD, $options);
 include "permission.inc.php";
 try {
 
-    $sqlinformation = 'SELECT * FROM Users';
+    $sqlinformation = 'SELECT * FROM User';
     
     $statementinformation= $db->prepare($sqlinformation);
     $statementinformation->execute();
