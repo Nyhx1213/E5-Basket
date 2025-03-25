@@ -73,6 +73,8 @@ include "permission.inc.php";
                     </tr>';   
 
 
+                //onclick permet d'avoir le message de confirmation.
+                
                 while ($row=$statementR->fetch()){
                     echo 
                     '<tr>
@@ -80,7 +82,7 @@ include "permission.inc.php";
                         <td>'.$row['Duree'].'</td>
                         <td>'.$row['DateEntrainement'].'</td>
                         <td> <a href="participants.php?workID='.$row['EntrainementID'].'">link</a> </td>
-                        <td class="flexdisplay"><a href="deleteworkout.php?workid='.$row['EntrainementID'].'"><button class="button-suppression">X</button></a> </td>  
+                        <td><a href="deleteworkout.php?workid='.$row['EntrainementID'].'" onclick="return confirm(\'Are you sure you want to delete this workout?\')"><button class="button-suppression">X</button></a> </td>  
                     </tr>';
                 }
                 
