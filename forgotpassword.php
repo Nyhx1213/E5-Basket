@@ -43,7 +43,7 @@ session_start();
                     $db = new PDO(DNS, LOGIN, PASSWORD, $options);
 
                     if (isset($_POST['mail'])) {
-                        $sql = 'SELECT * FROM Users WHERE Mail=:mai';
+                        $sql = 'SELECT * FROM User WHERE Mail=:mai';
                         $statement = $db->prepare($sql);
                         $statement->bindParam(':mai', $_POST['mail']);
                         $statement->execute();
@@ -55,7 +55,7 @@ session_start();
                             $code = bin2hex($bytes);
 
                             // Update the user's data to store the code and expiration date
-                            $stm = $db->prepare('UPDATE Users SET Code = :code, DateExp = :pdate WHERE UserID = :pid');
+                            $stm = $db->prepare('UPDATE User SET Code = :code, DateExp = :pdate WHERE UserID = :pid');
                             $date = new DateTime(date('Y-m-d H:i:s'));
                             $date->add(new DateInterval('PT2H')); // 2-hour expiration time
                             $date_str = $date->format('Y-m-d H:i:s');

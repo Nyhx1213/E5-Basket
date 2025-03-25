@@ -49,7 +49,7 @@
             $db = new PDO(DNS, LOGIN, PASSWORD, $options);
 
             if (!isset($_SESSION['login'])) { // If there's no login session, show the form
-                $sql = 'SELECT * FROM Users WHERE Login = :log';
+                $sql = 'SELECT * FROM User WHERE Login = :log';
 
                 echo 
                 '<div>
@@ -106,7 +106,7 @@
             <div class="button-container"><a href="teams.php" class="contrast">Teams and Players charts</a></div>
             <div class="button-container"><a href="gamemanage.php" class="contrast">Manage Games</a></div>
             <div class="button-container"><a href="gamechart.php" class="contrast">Game Chart</a></div>
-            <div class="button-container"><a href="manageexistinggames.php" class="contrast">Modify Planned Games</a>
+            <div class="button-container"><a href="manageexistinggames.php" class="contrast">Modify Planned Games</a></div>
             </div>';
             }
             ?> 

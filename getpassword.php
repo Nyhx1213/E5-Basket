@@ -37,7 +37,7 @@ session_start();
 
         if (isset($_GET['code']) && empty($_SESSION['login'])) {  
             //If code exists it'll check if the code is in the database.
-            $sql = 'SELECT * FROM Users WHERE Code = :codeunique';
+            $sql = 'SELECT * FROM User WHERE Code = :codeunique';
             $statement = $db->prepare($sql);
             $statement->bindParam(':codeunique', $_GET['code']);
             $statement->execute();
@@ -66,14 +66,14 @@ session_start();
 
                         if ($_POST['nvmdp'] == $_POST['mdpverf']) {  
                             $mdp = password_hash($_POST['nvmdp'], PASSWORD_DEFAULT);
-                            $sql2 = 'UPDATE Users SET Password = :nvmdpf WHERE Code = :codeunique';
+                            $sql2 = 'UPDATE User SET Password = :nvmdpf WHERE Code = :codeunique';
                             $statement2 = $db->prepare($sql2);
                             $statement2->bindParam(':codeunique', $_GET['code']);
                             $statement2->bindParam(':nvmdpf', $mdp);
                             $statement2->execute();
 
                             echo '<h1>Your password has been updated!</h1>';
-                            $sql3 = 'UPDATE Users SET Code = null WHERE Code = :codeunique';
+                            $sql3 = 'UPDATE User SET Code = null WHERE Code = :codeunique';
                             $statement3 = $db->prepare($sql3);
                             $statement3->bindParam(':codeunique', $_GET['code']);
                             $statement3->execute();
