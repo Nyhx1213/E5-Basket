@@ -132,12 +132,38 @@ include "permission.inc.php";
                                             SET ScoreEquipe1 = :score1, ScoreEquipe2 = :score2
                                             WHERE RencontreID = :idRencontre AND (ScoreEquipe1 OR ScoreEquipe2 IS NULL)';
                         
-                        // Updates JOUER Table
-                        $sqlupdatejouer = 'UPDATE Jouer 
-                                        SET Score = :score 
-                                        WHERE EquipeID = :equipeid AND RencontreID = :idRencontre AND Score IS null' ; 
+                        if ($_POST['scoreteam1'] > $_POST['scoreteam2']){
 
+                            $sqlupdatejouer1 = 'UPDATE Jouer 
+                                                SET Score = :score, EST_GAGNANT = 1
+                                                WHERE EquipeID = :equipeid AND RencontreID = :idRencontre AND Score IS null' ;
+                            
+                            $sqlupdatejouer2 = 'UPDATE Jouer 
+                                                SET Score = :score, EST_GAGNANT = 0
+                                                WHERE EquipeID = :equipeid AND RencontreID = :idRencontre AND Score IS null' ;
+                        }
 
+                        else if ($_POST['scoreteam1'] < $_POST['scoreteam2']){
+
+                            $sqlupdatejouer1 = 'UPDATE Jouer 
+                                                SET Score = :score, EST_GAGNANT = 0
+                                                WHERE EquipeID = :equipeid AND RencontreID = :idRencontre AND Score IS null' ;
+        
+                            $sqlupdatejouer2 = 'UPDATE Jouer 
+                                                SET Score = :score, EST_GAGNANT = 1
+                                                WHERE EquipeID = :equipeid AND RencontreID = :idRencontre AND Score IS null' ;
+                        }
+
+                        else { 
+
+                            $sqlupdatejouer1 = 'UPDATE Jouer 
+                                                SET Score = :score, EST_GAGNANT = -1
+                                                WHERE EquipeID = :equipeid AND RencontreID = :idRencontre AND Score IS null' ;
+        
+                            $sqlupdatejouer2 = 'UPDATE Jouer 
+                                                SET Score = :score, EST_GAGNANT = -1
+                                                WHERE EquipeID = :equipeid AND RencontreID = :idRencontre AND Score IS null' ;
+                        }
 
                         $statementupdaterencontre = $db->prepare($sqlupdaterencontre);
                         
@@ -149,7 +175,7 @@ include "permission.inc.php";
                         $statementupdaterencontre->execute();
 
                         // Parameters for the first team's score 
-                        $statementupdatejouer1= $db->prepare($sqlupdatejouer);
+                        $statementupdatejouer1= $db->prepare($sqlupdatejouer1);
                         $statementupdatejouer1->bindParam(':score',$scoreteam1);
                         $statementupdatejouer1->bindParam(':equipeid',$team1);
                         $statementupdatejouer1->bindParam(':idRencontre',$idRencontre);
@@ -157,7 +183,7 @@ include "permission.inc.php";
                         $statementupdatejouer1->execute();
 
                         // Parameters for the second team's score
-                        $statementupdatejouer2= $db->prepare($sqlupdatejouer);  
+                        $statementupdatejouer2= $db->prepare($sqlupdatejouer2);  
                         $statementupdatejouer2->bindParam(':score', $scoreteam2);
                         $statementupdatejouer2->bindParam(':equipeid', $team2);
                         $statementupdatejouer2->bindParam(':idRencontre', $idRencontre);

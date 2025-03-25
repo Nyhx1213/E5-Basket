@@ -48,7 +48,7 @@ session_start();
             } 
             else {
                 $db = new PDO(DNS, LOGIN, PASSWORD, $options);
-                $sql = 'INSERT INTO Users (Login, Password, Mail, DateCreation) VALUES (:uID, :uMDP, :uMail, :uDatecreation)'; // Insertion query for users.
+                $sql = 'INSERT INTO User (Login, Password, Mail, DateCreation) VALUES (:uID, :uMDP, :uMail, :uDatecreation)'; // Insertion query for users.
                 $sql2 = 'INSERT INTO Disposer (RoleID, UserID) VALUES (6, :userid)'; // Assigns user role.
 
                 echo '
@@ -75,7 +75,7 @@ session_start();
                     
                     $email = filter_var($_POST['mail'], FILTER_SANITIZE_EMAIL);
                     if (!filter_var($email, FILTER_VALIDATE_EMAIL) === false) { 
-                        $sqlcheckmail = 'SELECT Mail  FROM Users 
+                        $sqlcheckmail = 'SELECT Mail  FROM User
                                          WHERE Mail = :mail';
                         
                         $statementcheckmail = $db->prepare($sqlcheckmail);
@@ -90,7 +90,7 @@ session_start();
                         }
                         $statementcheckmail->closeCursor();
 
-                        $sqlchecklogin = 'SELECT Login as Log FROM Users
+                        $sqlchecklogin = 'SELECT Login as Log FROM User
                                           WHERE Login = :nom;';
                         $statementchecklogin = $db->prepare($sqlchecklogin);
                         $statementchecklogin->bindParam(':nom', $_POST['register']);
