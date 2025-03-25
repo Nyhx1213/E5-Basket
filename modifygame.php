@@ -3,17 +3,15 @@
     require_once "connect.php";
     $db = new PDO(DNS, LOGIN, PASSWORD, $options);
     require_once "permission.inc.php";
-    
-    $checkteam1 = null;
 
-    if (isset($_GET['matchid']) || $checkteam1 != null){ 
+    if (isset($_GET['matchid'])){ 
     $sqlchart = 'SELECT E1.NomEquipe as Equipe1, E2.NomEquipe as Equipe2, 
                              E1.EquipeID as ID1, E2.EquipeID as ID2, J1.Score as Score1,
                              J2.Score as Score2, R.DateRencontre, R.Lieu FROM Jouer as J1
                              INNER JOIN Equipe as E1 ON J1.EquipeID = E1.EquipeID
                              INNER JOIN Jouer as J2 ON J1.RencontreID = J2.RencontreID 
                              INNER JOIN Equipe as E2 ON J2.EquipeID = E2.EquipeID
-                             INNER JOIN Rencontre as R ON J1.RencontreID = R.RencontreID;
+                             INNER JOIN Rencontre as R ON J1.RencontreID = R.RencontreID
                              WHERE J1.RencontreID = :id AND J1.EquipeID < J2.EquipeID';
 
 $statementchart = $db->prepare($sqlchart);
@@ -23,12 +21,12 @@ $statementchart->execute();
 $row = $statementchart->fetch();
 
 //Variables to later on check 
-if (isset($_GET['matchid'])){
-    $checkteam1=$row['ID1'];
-    $checkteam2=$row['ID2'];    
-    }
+$_SESSION['team1'] = $row['ID1'];
+$_SESSION['team2'] = $row['ID2'];
+$_SESSION['matchid'] = $_GET['matchid'];    
+
 }
-else { 
+else if (!isset($_SESSION['matchid'])) { 
     header("Location: gamechart.php");
 }
 ?>
@@ -68,33 +66,117 @@ else {
         </nav>
         </header>
         <main>
-            <form action="modifygame.php" method="post">
+            <?php 
+            if (isset($_GET['matchid'])){
+
+                echo '
+                <form action="modifygame.php" method="post">
                 <select name="teamname1" id="teamname1">
-                    <option value="<?php echo $row['ID1']; ?>"><?php echo $row['Equipe1']; ?></option> 
-                </select>
+                <option value="'.$row['ID1'].'">'.$row['Equipe1'].'</option> 
+                    </select>
 
-                <label for="teamscore1">Change Score </label>
-                <input type="number" id="teamscore1" name="teamscore1" value="<?php echo $row['Score1']; ?>">
+                    <label for="teamscore1">Change Score </label>
+                    <input type="number" id="teamscore1" name="teamscore1" value="'.$row['Score1'].'">
+                    
+                    <select name="teamname2" id="teamname2" value="'.$row['ID2'].'">
+                    <option value="'.$row['ID2'].'">'.$row['Equipe2'].'</option>
+                    </select>
+                    
+                    <label for="teamscore2">Change Score</label>
+                    <input type="number" id="teamscore2" name="teamscore2" value="'.$row['Score2'].'">
+                    
+                    <label for="date">Change Date</label>
+                    <input type="datetime-local" id="date" name="date" value="'.$row['DateRencontre'].'">
+                    
+                    <label for="location">Change Location</label> 
+                    <input type="text" id="location" name="location" value="'.$row['Lieu'].'">
+                    
+                    <input type="submit" value="Submit" name="submit" id="submit">
+                    </form>';
+                }
+
+                if (isset($_POST['submit'])){ 
+
+                    if (empty($_POST['teamscore1']) || empty($_POST['teamscore2']) || empty($_POST['date']) || empty($_POST['location'])) {
+                        
+                        echo '<h1 class="message error"> Please fill in all fields correctly </h1>';
+                        header('refresh:3;url=gamechart.php');
+                        exit;
+                    
+                    }
+                    
                 
-                <select name="teamname2" id="teamname2" value="<?php echo $row['ID2']; ?>">
-                    <option><?php echo $row['Equipe2']; ?></option>
-                </select>
                 
-                <label for="teamscore2">Change Score</label>
-                <input type="number" id="teamscore2" name="teamscore2" value="<?php echo $row['Score2']; ?>">
-                
-                <label for="date">Change Date</label>
-                <input type="datetime-local" id="date" name="date" value="<?php echo $row['DateRencontre']; ?>">
+                else { 
+                    try {$date = new DateTime($_POST['date']);
+                    $datetime= $date->format('Y-m-d H:i:s');
+                    $sqlupdaterencontre = 'UPDATE Rencontre
+                                           SET ScoreEquipe1 = :scoreteam1, ScoreEquipe2 = :scoreteam2, Lieu= :lieu, DateRencontre = :date
+                                           WHERE Rencontreid = :id ';
+                    $statementupdaterencontre = $db->prepare($sqlupdaterencontre);
+                    $statementupdaterencontre->bindParam(':id', $_SESSION['matchid']);
+                    $statementupdaterencontre->bindParam(':scoreteam1', $_POST['teamscore1']);
+                    $statementupdaterencontre->bindParam(':scoreteam2', $_POST['teamscore2']);
+                    $statementupdaterencontre->bindParam(':lieu', $_POST['location']);
+                    $statementupdaterencontre->bindParam(':date', $datetime);
+                    $statementupdaterencontre->execute();
 
-                <label for="location">Change Location</label> 
-                <input type="text" id="location" name="location" value="<?php echo $row['Lieu']; ?>">
+                    if ($_POST['teamscore1'] > $_POST['teamscore2']){
+                        $sqlupdatejouer1 = 'UPDATE Jouer 
+                                            SET Score = :score, EST_GAGNANT = 1
+                                            WHERE RencontreID = :idrencontre AND EquipeID = :equipeid';
 
-                <input type="submit" value="Submit">
-            </form>
+                        $sqlupdatejouer2 = 'UPDATE Jouer 
+                                            SET Score = :score, EST_GAGNANT = 0
+                                            WHERE RencontreID = :idrencontre AND EquipeID = :equipeid';
+                    }
+                    
+                    else if ($_POST['teamscore1'] < $_POST['teamscore2']){
+                        $sqlupdatejouer1 = 'UPDATE Jouer 
+                                            SET Score = :score, EST_GAGNANT = 0
+                                            WHERE RencontreID = :idrencontre AND EquipeID = :equipeid';
 
-            <?php if (isset($_POST['submit'])){
+                        $sqlupdatejouer2 = 'UPDATE Jouer 
+                                            SET Score = :score, EST_GAGNANT = 1
+                                            WHERE RencontreID = :idrencontre AND EquipeID = :equipeid';
+                    }
+
+                    else {
+                        $sqlupdatejouer1 = 'UPDATE Jouer 
+                                            SET Score = :score, EST_GAGNANT = -1
+                                            WHERE RencontreID = :idrencontre AND EquipeID = :equipeid';
+
+                        $sqlupdatejouer2 = 'UPDATE Jouer 
+                                            SET Score = :score, EST_GAGNANT = -1
+                                            WHERE RencontreID = :idrencontre AND EquipeID = :equipeid';
+                    }
+
+                    $statementupdatejouer1 = $db->prepare($sqlupdatejouer1);
+                    $statementupdatejouer1->bindParam(':score', $_POST['teamscore1']);
+                    $statementupdatejouer1->bindParam(':idrencontre', $_SESSION['matchid']);
+                    $statementupdatejouer1->bindParam(':equipeid', $_SESSION['team1']);
+                    $statementupdatejouer1->execute();
+
+                    $statementupdatejouer2 = $db->prepare($sqlupdatejouer2);
+                    $statementupdatejouer2->bindParam(':score', $_POST['teamscore2']);
+                    $statementupdatejouer2->bindParam(':idrencontre', $_SESSION['matchid']);
+                    $statementupdatejouer2->bindParam(':equipeid', $_SESSION['team2']);
+                    $statementupdatejouer2->execute();
+
+                    $_SESSION['team1'] = null;
+                    $_SESSION['team2'] = null;
+                    $_SESSION['matchid'] = null;
+
+                    echo '<h1 class="message success"> The modification is successful please wait a few seconds to be redirected back';
+                    header('refresh:4;url=gamechart.php');
+                }
+                catch (PDOException $e) {
+                    echo '<h3>Error: ' . $e->getMessage() . '</h3>';
+                }
+                }
 
             }
+            
 
             $db=null;
             ?>
