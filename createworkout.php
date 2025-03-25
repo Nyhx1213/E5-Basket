@@ -18,6 +18,7 @@ if (isset($_POST['workoutname']) && !empty($_POST['workoutname'])) { // Is the f
 
         $datelimit = new DateTime(date('Y-m-d H:i:s'));
         $datelimit->add(new Dateinterval('P1Y'));
+        $datelimit->add(new Dateinterval('M1Y'));
 
         $workoutdate = Datetime::createFromFormat('Y-m-d\TH:i',$_POST['workoutdate']); //Converts the datetime local string into a datetime object
         if ($workoutdate > $datelimit) {
