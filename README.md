@@ -164,56 +164,48 @@ We have added protections to prevent unauthorized access or manipulation of work
 ---
 # Game Management Function
 
-## Overview
-
 The **Game Management** functionality allows the management of basketball games, teams, and players. It provides tools for creating games, updating scores, and tracking player performance. Depending on the role of the user, they may have different permissions to view, create, modify, or delete games.
-
-## Features
-
-- **Teams and Players Chart**
-- **Game Creation/Planning**
-- **Game Chart**
-- **Add Scores to Planned Games**
-
----
 
 ## Teams and Players Chart
 
 ### Description:
-From the menu, you can click on the page "Teams and Players Chart". This page displays a list of multiple teams, showing the number of wins each team has. The win count is automatically updated based on the results of the games created later on. For example, if a team wins a game, their win count will increase by one. You can also access each team's player list and click on a player to view their individual stats. 
+From the menu, click on the page **"Teams and Players Chart"**. This page displays a list of all teams, showing the number of wins each team has. The win count is automatically updated based on the results of the games created later on. For example, when a team wins a game, their win count will increase by one. You can also access each team's player list, and by clicking on a player, you will be able to view their individual stats.
 
-In the player's stats page, you can view the games they have participated in, along with their average stats.
+In the player's stats page, you can see the games they have participated in, along with their average stats.
 
 ### Permissions:
-- **View:** Everyone
+- **View**: Everyone
 
 ---
 
 ## Game Creation/Planning
 
 ### Description:
-From the menu, click on "Manage Games" to enter the game creation and planning page. Here, users with appropriate permissions can create a game, specifying the teams involved, the date of the game, the score (if available), and the game location. The score can be left blank initially and added at a later time. To prevent any form tampering, the form is also protected against malicious inputs.
+From the menu, click on **"Manage Games"** to enter the game creation and planning page. Here, users with appropriate permissions can create a new game. They can specify the teams involved, the date of the game, the score (if available), and the location of the game. The score can be left blank initially and updated later. The form is protected against any form tampering to ensure valid data submission.
 
 ### Permissions:
-- **Admin, Manager**
+- **Admin**: Can create, modify, and delete games.
+- **Manager**: Can create and modify games.
 
 ---
 
 ## Game Chart
 
 ### Description:
-From the menu, click on "Game Chart" to view a list of all games that have been played (games that have scores filled in). You can modify existing games, remove them, and view player performance in each game. 
+From the menu, click on **"Game Chart"** to view a list of all games that have been played (games that have scores filled in). Here, you can modify existing games, remove them, and view player performance for each game.
 
 ### Permissions:
-- **View:** Everyone
-- **Modify/Delete:** Admin, Manager
+- **View**: Everyone
+- **Modify/Delete**: Admin, Manager
 
 ---
 
 ## Add Scores to Planned Games
 
 ### Description:
-From the menu, click on "Modify Planned Games" to view a list of games that have been created but do not yet have scores assigned. You can enter scores, modify the date or location of the game, and finalize the game details.
+From the menu, click on **"Modify Planned Games"** to view a list of games that have been created but do not yet have scores assigned. You can enter scores for these games, modify the date or location, and finalize the game details. This functionality helps to complete the match information once the game has been played.
 
 ### Permissions:
-- **Admin, Manager**
+- **Admin**: Can add scores and modify game details.
+- **Manager**: Can add scores and modify game details.
+
