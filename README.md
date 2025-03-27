@@ -30,6 +30,26 @@ This application is designed to manage various aspects of a basketball organizat
 - Calculate player statistics based on match performances.
 
 ---
+## How to Use
+
+### 1. Modify the Database Connection
+To make the system functional, you need to modify the `connect.php` file. This file contains the database connection settings, which must be updated with your own database credentials.
+- In the `connect.php` file, you'll find placeholders for:
+  - `DNS` (Database source name)
+  - `LOGIN` (Your database username)
+  - `PASSWORD` (Your database password)
+- Replace these placeholders with your actual database information.
+
+### 2. Database Configuration
+- A copy of the required database schema will be provided, so you can import it into your MySQL database. This database contains all the necessary tables and relationships to support the application’s functionality (e.g., users, roles, games, workouts).
+
+### 3. Setup Process
+- Ensure you have PHP and MySQL (or MariaDB) installed on your system.
+- Import the provided database schema into your MySQL/MariaDB instance.
+- Configure the `connect.php` file with your database credentials.
+- Once everything is set up, the application will be ready for use. You can create accounts, log in, and use all the associated functionalities.
+
+---
 # User Management Function
 
 The **User Management** functionality allows for easy user creation, login, and account recovery. It provides a secure system to manage user accounts and ensure appropriate access levels based on user roles. Here's a detailed breakdown of how these functions work.
@@ -65,24 +85,4 @@ The **User Management** functionality allows for easy user creation, login, and 
   - **Security**: The system ensures that the token can only be used once, and passwords are securely updated in the database after the reset.
 
 ---
-
-## How to Use
-
-### 1. Modify the Database Connection
-To make the system functional, you need to modify the `connect.php` file. This file contains the database connection settings, which must be updated with your own database credentials.
-- In the `connect.php` file, you'll find placeholders for:
-  - `DNS` (Database source name)
-  - `LOGIN` (Your database username)
-  - `PASSWORD` (Your database password)
-- Replace these placeholders with your actual database information.
-
-### 2. Database Configuration
-- A copy of the required database schema will be provided, so you can import it into your MySQL database. This database contains all the necessary tables and relationships to support the application’s functionality (e.g., users, roles, games, workouts).
-
-### 3. Setup Process
-- Ensure you have PHP and MySQL (or MariaDB) installed on your system.
-- Import the provided database schema into your MySQL/MariaDB instance.
-- Configure the `connect.php` file with your database credentials.
-- Once everything is set up, the application will be ready for use. You can create accounts, log in, and use all the associated functionalities.
-
 
