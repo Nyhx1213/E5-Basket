@@ -22,8 +22,8 @@ catch (PDOException $e) {
     <head>
         <title> Profile </title>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="css.css">
-        <link rel="stylesheet" href="pico.min.css">
+        <link rel="stylesheet" href="css/css.css">
+        <link rel="stylesheet" href="css/pico.min.css">
     </head>
     <body>
         <header>

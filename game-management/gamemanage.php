@@ -1,14 +1,14 @@
 <?php 
 session_start();
-require_once "connect.php";
+require_once "../connect.php";
 $db = new PDO(DNS, LOGIN, PASSWORD, $options);
-include "permission.inc.php";
+include "../permission.inc.php";
 ?>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <link rel="Stylesheet" href="css.css">
-    <link rel="stylesheet" href="pico.min.css">
+    <link rel="Stylesheet" href="../css/css.css">
+    <link rel="stylesheet" href="../css/pico.min.css">
     <title>Game Management</title>
 </head>
 <body>
@@ -17,22 +17,22 @@ include "permission.inc.php";
     <ul>
         <li>
         <?php if(isset($_SESSION['login'])){
-                echo'<a href="profile.php">Welcome '.$_SESSION['login'].'</a>';
+                echo'<a href="../profile.php">Welcome '.$_SESSION['login'].'</a>';
             }
         ?>
         </li>
     </ul>
     <ul>
         <li>
-            <strong><a href="index.php">Basketball Management Application</a></strong>
+            <strong><a href="../index.php">Basketball Management Application</a></strong>
         </li>
     </ul>
     <ul>
         <li> 
             <?php if(isset($_SESSION['login'])){
-                echo'<a href="disconnect.php"> Disconnect</a>';
+                echo'<a href="../disconnect.php"> Disconnect</a>';
             }
-                else echo '<a href="index.php">Login</a>';
+                else echo '<a href="../index.php">Login</a>';
             ?>
         </li>
     </ul>
@@ -128,7 +128,7 @@ include "permission.inc.php";
                         $statementcheckteam2= $db->prepare($sqlcheckteam2);
                         $statementcheckteam2->bindParam(':id',$_POST['teamname2']);
                         $statementcheckteam2->execute();
-
+                        
                         $rowcheckteam2= $statementcheckteam2->fetch();
                         if($rowcheckteam2['CountEquipe']<1){
                             echo'<h2 class="message error"> An error as occured with the input of your team, please try again or contact support</h2>';
@@ -139,12 +139,20 @@ include "permission.inc.php";
                             $teamname2=$_POST['teamname2'];
                             $scoreteam1=$_POST['scoreteam2'];
                             $scoreteam2=$_POST['scoreteam1'];
-                        $datelimit = new DateTime(date('Y-m-d H:i:s'));
-                        $datelimit->add(new DateInterval('P1Y'));
-                        
-                        if ($_POST['gamedate'] > $datelimit) {
-                            echo '<h2 class="message success>Please input a valid date and ensure the game duration is not more than 1 year from now.</h2>';
+
+                            //Time limit to avoid user putting in random years.
+                            $datelimitadd = new DateTime(date('Y-m-d H:i:s'));
+                            $datelimitadd->add(new DateInterval('P1Y'));
+                            $datelimitsub = new DateTime(date('Y-m-d H:i:s'));
+                            $datelimitsub->sub(new DateInterval('P1Y'));
+
+                            //Puts the user input into datetime format for comparison.
+                            $userDate = DateTime::createFromFormat('Y-m-d\TH:i', $_POST['gamedate']);
+                            
+                        if ($userDate > $datelimitadd || $userDate < $datelimitsub) {
+                            echo '<h2 class="message error">Please input a valid date</h2>';
                         } 
+
                         else {
 
                             $sql = 'INSERT INTO Rencontre (DateRencontre, ScoreEquipe1, ScoreEquipe2, Lieu) 
@@ -188,6 +196,7 @@ include "permission.inc.php";
                             
                             $sqlinsert = 'INSERT INTO Performance (MembreID, RencontreID, Points, Assists, Rebonds, MinutesJouees)
                                         VALUES (:mID, :rencontreid, :points, :assists, :rebounds, :mjouer)';
+                                        
                             $statementinsert = $db->prepare($sqlinsert);
                             
                             while ($row = $statementplayers->fetch()) {
