@@ -85,4 +85,85 @@ The **User Management** functionality allows for easy user creation, login, and 
   - **Security**: The system ensures that the token can only be used once, and passwords are securely updated in the database after the reset.
 
 ---
+# Basketball Application Documentation
+
+## Features
+
+### Workout Management Function
+
+The **Workout Management Function** allows authorized users to create, manage, and attend basketball workouts. The functionality is divided into three main parts:
+
+#### 1. Workout Creation
+- **Description**: 
+    From the menu, a user with the appropriate permissions can access the **"Create a Workout"** page. This page provides a form to input the workout name, date, and duration. The form ensures that the date entered is not more than 1 year before or after the current date.
+  
+- **Allowed Roles**: 
+    - Admin
+    - Manager
+    - Coach
+  
+- **Form Fields**: 
+    - **Workout Name**: A name for the workout session.
+    - **Date**: The date of the workout. Must be within 1 year before or after the current date.
+    - **Duration**: The length of the workout session.
+
+#### 2. Manage Workout Attendance
+- **Description**: 
+    Authorized users can access the **"Manage Workout Attendance"** page. Here, they can add players to existing workouts. The page will only show workouts that the player is not already assigned to.
+  
+- **Allowed Roles**: 
+    - Admin
+    - Manager
+    - Coach
+    - Assistant
+  
+- **Form Behavior**: 
+    - The form will display a list of available workouts that the player is not already part of.
+    - The user can select a player to add to a workout session.
+
+#### 3. Workout Chart
+- **Description**: 
+    From the menu, users can enter the **"Workout List"** page. This page displays all the existing workouts. Users can click on a specific workout to view the details, including who is participating, the date, and the duration. Users with the correct permissions can also delete workouts.
+
+- **Permissions**:
+    - **Allowed Roles**: 
+        - Admin
+        - Manager
+        - Coach
+        - Assistant
+        - Player
+  
+    - **Permissions to Delete a Workout**:
+        - Admin
+        - Manager
+        - Coach
+
+- **Functionality**:
+    - View the list of workouts.
+    - See the participating players for each workout.
+    - View workout details (date, duration).
+    - Delete workouts if the user has the required permissions.
+
+---
+
+## How to Use
+
+### 1. **Create a Workout**:
+To create a workout, navigate to the "Create a Workout" page from the main menu. Ensure that you input a valid date and duration for the workout. You can only create a workout within the date range allowed (within 1 year before or after the current date).
+
+### 2. **Manage Workout Attendance**:
+To manage workout attendance, go to the "Manage Workout Attendance" page. This will show a list of available workouts that players are not yet added to. Select a player from the list and add them to the workout session.
+
+### 3. **Workout Chart**:
+To see a list of existing workouts, go to the "Workout List" page. From there, you can view workout details, see participating players, and delete the workout if you have the right permissions.
+
+---
+
+## Technical Details
+
+### Database Protection
+We have added protections to prevent unauthorized access or manipulation of workout data through form submissions or direct URL manipulations. Proper validation and sanitization have been applied to forms and inputs to protect against common security vulnerabilities such as SQL injection and XSS (Cross-Site Scripting).
+
+---
+
 
