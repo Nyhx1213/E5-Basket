@@ -30,6 +30,7 @@ This application is designed to manage various aspects of a basketball organizat
 - Calculate player statistics based on match performances.
 
 ---
+
 ## How to Use
 
 ### 1. Modify the Database Connection
@@ -85,10 +86,6 @@ The **User Management** functionality allows for easy user creation, login, and 
   - **Security**: The system ensures that the token can only be used once, and passwords are securely updated in the database after the reset.
 
 ---
-# Basketball Application Documentation
-
-## Features
-
 ### Workout Management Function
 
 The **Workout Management Function** allows authorized users to create, manage, and attend basketball workouts. The functionality is divided into three main parts:
@@ -220,5 +217,3 @@ From the menu, click on "Modify Planned Games" to view a list of games that have
 
 ### Permissions:
 - **Admin, Manager**
-
-
