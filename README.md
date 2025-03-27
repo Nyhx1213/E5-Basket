@@ -1,29 +1,34 @@
 # Basketball Management Application
 
 ## Introduction
-This application is designed to help manage basketball-related activities, including user management, game management, workout management, and statistics tracking. It provides different levels of access based on user roles to ensure proper functionality and security.
+This application is designed to manage various aspects of a basketball organization, including user management, workout management, and game management. The system includes role-based permissions to ensure proper access control.
 
-### Features:
-#### 1. User Management
-- Users can create accounts, log in, and reset their passwords if forgotten.
-- A personalized profile page displays relevant information.
-- Permissions are managed through different roles:
-  - **Admin**: Has full access to all features.
-  - **Manager**: Can create, delete, modify, and plan games, add and remove workouts, and manage players in workouts.
-  - **Coach**: Can create and delete workouts, see player and game information, and add players to workouts.
-  - **Assistant**: Can do everything a coach can except create workouts.
-  - **Player**: Can view match information, personal stats, and workout details.
-  - **Normal User**: Can only see upcoming games and player statistics.
+## Features
 
-#### 2. Workout Management
-- Users with appropriate permissions can create workouts with details such as:
-  - Name
-  - Date
-  - Duration
-  - Players participating
-- Users can view a list of created workouts, delete them, and see which players are involved.
-- Security measures are implemented to protect the database from unauthorized form submissions and URL manipulations.
+### User Management
+- Users can create accounts and log in.
+- Password recovery functionality is available.
+- Personalized user profiles display relevant information.
+- Role-based permissions include:
+  1. **Admin** - Access to all functions.
+  2. **Manager** - Can create, delete, and modify games, plan games, add and remove workouts, and assign players to workouts.
+  3. **Coach** - Can create and delete workouts, view player information, game details, and assign players to workouts.
+  4. **Assistant** - Similar to Coach but cannot create workouts.
+  5. **Player** - Can view match details, personal stats, and workout details.
+  6. **Normal User** - Can view upcoming games and player stats.
 
-## Functionality Details
-(To be added as we expand the documentation.)
+### Workout Management
+- Users can create workouts, specifying name, date, length, and participating players.
+- Workouts can be listed, deleted, and reviewed to check player participation.
+- Security measures are in place to prevent unauthorized database access via forms or URL parameters.
+
+### Game Management
+- Create basketball matchups with scores (or update scores later).
+- Modify existing games as needed.
+- Delete games when necessary.
+- View a player’s performance in a match.
+- Calculate player statistics based on match performances.
+
+---
+More details on each function will be provided in the following sections.
 
