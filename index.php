@@ -12,8 +12,8 @@
                 echo '<title>Login</title>';
             }
         ?>
-        <link rel="stylesheet" href="pico.min.css">
-        <link rel="stylesheet" href="css.css">
+        <link rel="stylesheet" href="css/pico.min.css">
+        <link rel="stylesheet" href="css/css.css">
     </head>
     <body>
         <header>
@@ -100,13 +100,13 @@
             else {
             echo '
             <div class="grid">
-            <div class="button-container"><a href="createworkout.php" class="contrast">Create a Workout</a></div>
-            <div class="button-container"><a href="workout.php" class="contrast">Manage Workout Attendance</a></div>
-            <div class="button-container"><a href="wdetails.php" class="contrast">Workout List</a></div>
-            <div class="button-container"><a href="teams.php" class="contrast">Teams and Players charts</a></div>
-            <div class="button-container"><a href="gamemanage.php" class="contrast">Manage Games</a></div>
-            <div class="button-container"><a href="gamechart.php" class="contrast">Game Chart</a></div>
-            <div class="button-container"><a href="manageexistinggames.php" class="contrast">Modify Planned Games</a></div>
+            <div class="button-container"><a href="workout-management/createworkout.php" class="contrast">Create a Workout</a></div>
+            <div class="button-container"><a href="workout-management/workout.php" class="contrast">Manage Workout Attendance</a></div>
+            <div class="button-container"><a href="workout-management/wdetails.php" class="contrast">Workout List</a></div>
+            <div class="button-container"><a href="team-stats/teams.php" class="contrast">Teams and Players charts</a></div>
+            <div class="button-container"><a href="game-management/gamemanage.php" class="contrast">Manage Games</a></div>
+            <div class="button-container"><a href="game-management/gamechart.php" class="contrast">Game Chart</a></div>
+            <div class="button-container"><a href="game-management/manageexistinggames.php" class="contrast">Modify Planned Games</a></div>
             </div>';
             }
             ?> 
