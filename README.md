@@ -165,5 +165,60 @@ To see a list of existing workouts, go to the "Workout List" page. From there, y
 We have added protections to prevent unauthorized access or manipulation of workout data through form submissions or direct URL manipulations. Proper validation and sanitization have been applied to forms and inputs to protect against common security vulnerabilities such as SQL injection and XSS (Cross-Site Scripting).
 
 ---
+# Game Management Function
+
+## Overview
+
+The **Game Management** functionality allows the management of basketball games, teams, and players. It provides tools for creating games, updating scores, and tracking player performance. Depending on the role of the user, they may have different permissions to view, create, modify, or delete games.
+
+## Features
+
+- **Teams and Players Chart**
+- **Game Creation/Planning**
+- **Game Chart**
+- **Add Scores to Planned Games**
+
+---
+
+## Teams and Players Chart
+
+### Description:
+From the menu, you can click on the page "Teams and Players Chart". This page displays a list of multiple teams, showing the number of wins each team has. The win count is automatically updated based on the results of the games created later on. For example, if a team wins a game, their win count will increase by one. You can also access each team's player list and click on a player to view their individual stats. 
+
+In the player's stats page, you can view the games they have participated in, along with their average stats.
+
+### Permissions:
+- **View:** Everyone
+
+---
+
+## Game Creation/Planning
+
+### Description:
+From the menu, click on "Manage Games" to enter the game creation and planning page. Here, users with appropriate permissions can create a game, specifying the teams involved, the date of the game, the score (if available), and the game location. The score can be left blank initially and added at a later time. To prevent any form tampering, the form is also protected against malicious inputs.
+
+### Permissions:
+- **Admin, Manager**
+
+---
+
+## Game Chart
+
+### Description:
+From the menu, click on "Game Chart" to view a list of all games that have been played (games that have scores filled in). You can modify existing games, remove them, and view player performance in each game. 
+
+### Permissions:
+- **View:** Everyone
+- **Modify/Delete:** Admin, Manager
+
+---
+
+## Add Scores to Planned Games
+
+### Description:
+From the menu, click on "Modify Planned Games" to view a list of games that have been created but do not yet have scores assigned. You can enter scores, modify the date or location of the game, and finalize the game details.
+
+### Permissions:
+- **Admin, Manager**
 
 
