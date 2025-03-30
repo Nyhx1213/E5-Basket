@@ -17,7 +17,7 @@ try{
 
     $rowcount= $statementPerm->fetchColumn();
     if($rowcount<1){
-        header('Location: 403.php?page='.$page); //If there are less than 1 results in the authorized pages for ur role then go to 403
+        header('Location: ../403.php?page='.$page); //If there are less than 1 results in the authorized pages for ur role then go to 403
     }
     }
     catch (PDOException $e){

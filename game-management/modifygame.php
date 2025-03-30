@@ -86,7 +86,7 @@ else if (!isset($_SESSION['matchid'])) {
                     <input type="number" id="teamscore2" name="teamscore2" value="'.$row['Score2'].'">
                     
                     <label for="date">Change Date</label>
-                    <input type="datetime-local" id="date" name="date" value="'.$row['DateRencontre'].'">
+                    <input type="datetime-local" id="date" name="date" min="0000-01-01" max="9999-12-31" value="'.$row['DateRencontre'].'">
                     
                     <label for="location">Change Location</label> 
                     <input type="text" id="location" name="location" value="'.$row['Lieu'].'">
@@ -108,8 +108,21 @@ else if (!isset($_SESSION['matchid'])) {
                 
                 
                 else { 
-                    try {$date = new DateTime($_POST['date']);
-                    $datetime= $date->format('Y-m-d H:i:s');
+                    try {
+                    //Time limit to avoid user putting in random years.
+                    $datelimitadd = new DateTime(date('Y-m-d H:i:s'));
+                    $datelimitadd->add(new DateInterval('P1Y'));
+                    $datelimitsub = new DateTime(date('Y-m-d H:i:s'));
+                    $datelimitsub->sub(new DateInterval('P1Y'));
+                    
+                    //Puts the user input into datetime format for comparison.
+                    $userDate = DateTime::createFromFormat('Y-m-d\TH:i', $_POST['date']);
+                                                
+                    if ($userDate > $datelimitadd || $userDate < $datelimitsub) {
+                        echo '<h2 class="message error">Please input a valid date</h2>';
+                        header('refresh:3;url=gamechart.php');
+                    }
+                    else {  
                     $sqlupdaterencontre = 'UPDATE Rencontre
                                            SET ScoreEquipe1 = :scoreteam1, ScoreEquipe2 = :scoreteam2, Lieu= :lieu, DateRencontre = :date
                                            WHERE Rencontreid = :id ';
@@ -118,7 +131,7 @@ else if (!isset($_SESSION['matchid'])) {
                     $statementupdaterencontre->bindParam(':scoreteam1', $_POST['teamscore1']);
                     $statementupdaterencontre->bindParam(':scoreteam2', $_POST['teamscore2']);
                     $statementupdaterencontre->bindParam(':lieu', $_POST['location']);
-                    $statementupdaterencontre->bindParam(':date', $datetime);
+                    $statementupdaterencontre->bindParam(':date', $userDate);
                     $statementupdaterencontre->execute();
 
                     if ($_POST['teamscore1'] > $_POST['teamscore2']){
@@ -169,6 +182,7 @@ else if (!isset($_SESSION['matchid'])) {
 
                     echo '<h1 class="message success"> The modification is successful please wait a few seconds to be redirected back';
                     header('refresh:4;url=gamechart.php');
+                }
                 }
                 catch (PDOException $e) {
                     echo '<h3>Error: ' . $e->getMessage() . '</h3>';
