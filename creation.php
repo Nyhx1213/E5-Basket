@@ -5,8 +5,8 @@ session_start();
 <head>
     <title>Account Creation</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="css.css">
-    <link rel="stylesheet" href="pico.min.css">
+    <link rel="stylesheet" href="css/css.css">
+    <link rel="stylesheet" href="css/pico.min.css">
 </head>
 <body class="account-creation-page">
 

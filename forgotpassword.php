@@ -5,8 +5,8 @@ session_start();
     <head>
         <meta charset="utf-8">
         <title>Forgot Password</title>
-        <link rel="stylesheet" href="css.css">
-        <link rel="stylesheet" href="pico.min.css">
+        <link rel="stylesheet" href="css/css.css">
+        <link rel="stylesheet" href="css/pico.min.css">
     </head>
     <body class="account-creation-page">
         <header>
