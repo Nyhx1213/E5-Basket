@@ -1,8 +1,8 @@
 <?php
     session_start();
-    require_once "connect.php";
+    require_once "../connect.php";
     $db = new PDO(DNS, LOGIN, PASSWORD, $options);
-    require_once "permission.inc.php";
+    require_once "../permission.inc.php";
 
     if (isset($_GET['matchid'])){ 
     $sqlchart = 'SELECT E1.NomEquipe as Equipe1, E2.NomEquipe as Equipe2, 
@@ -33,8 +33,8 @@ else if (!isset($_SESSION['matchid'])) {
 <html>
     <head>
         <title> Modify Game </title>
-        <link rel="stylesheet" href="pico.min.css">
-        <link rel="stylesheet" href="css.css">
+        <link rel="stylesheet" href="../css/pico.min.css">
+        <link rel="stylesheet" href="../css/css.css">
         <meta charset="utf-8">
     </head>
     <body>
@@ -43,7 +43,7 @@ else if (!isset($_SESSION['matchid'])) {
                 <ul>
                     <li>
                         <?php if(isset($_SESSION['login'])){
-                            echo'<a href="profile.php">Welcome '.$_SESSION['login'].'</a>';
+                            echo'<a href="../profile.php">Welcome '.$_SESSION['login'].'</a>';
                         }
                         else echo '';
                         ?>
@@ -51,15 +51,15 @@ else if (!isset($_SESSION['matchid'])) {
             </ul>
             <ul>
                 <li>
-                    <strong><a href="index.php">Basketball Management Application</a></strong>
+                    <strong><a href="../index.php">Basketball Management Application</a></strong>
                 </li>
             </ul>
             <ul>
                 <li> 
                     <?php if(isset($_SESSION['login'])){
-                        echo'<a href="disconnect.php"> Disconnect</a>';
+                        echo'<a href="../disconnect.php"> Disconnect</a>';
                     }
-                    else echo '<a href="index.php">Login</a>';
+                    else echo '<a href="../index.php">Login</a>';
                     ?>
                 </li>
             </ul>
