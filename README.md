@@ -1,211 +1,147 @@
-# Basketball Management Application
+# Système de Gestion du Basketball
 
 ## Introduction
-This application is designed to manage various aspects of a basketball organization, including user management, workout management, and game management. The system includes role-based permissions to ensure proper access control.
+Cette application est conçue pour gérer divers aspects d’une organisation de basketball, y compris la gestion des utilisateurs, des entraînements et des matchs. Le système inclut des permissions basées sur les rôles afin d'assurer un contrôle d'accès approprié.
 
-## Features
+## Fonctionnalités
 
-### User Management
-- Users can create accounts and log in.
-- Password recovery functionality is available.
-- Personalized user profiles display relevant information.
-- Role-based permissions include:
-  1. **Admin** - Access to all functions.
-  2. **Manager** - Can create, delete, and modify games, plan games, add and remove workouts, and assign players to workouts.
-  3. **Coach** - Can create and delete workouts, view player information, game details, and assign players to workouts.
-  4. **Assistant** - Similar to Coach but cannot create workouts.
-  5. **Player** - Can view match details, personal stats, and workout details.
-  6. **Normal User** - Can view upcoming games and player stats.
+### Gestion des Utilisateurs
+- Les utilisateurs peuvent créer des comptes et se connecter.
+- Une fonctionnalité de récupération de mot de passe est disponible.
+- Les profils utilisateurs affichent des informations personnalisées.
+- Les permissions basées sur les rôles incluent :
+  1. **Admin** - Accès à toutes les fonctionnalités.
+  2. **Manager** - Peut créer, supprimer et modifier des matchs, planifier des matchs, ajouter et supprimer des entraînements, et assigner des joueurs aux entraînements.
+  3. **Coach** - Peut créer et supprimer des entraînements, voir les informations des joueurs, les détails des matchs et assigner des joueurs aux entraînements.
+  4. **Assistant** - Similaire au Coach mais ne peut pas créer d’entraînements.
+  5. **Joueur** - Peut voir les détails des matchs, ses statistiques personnelles et les entraînements auxquels il participe.
+  6. **Utilisateur Normal** - Peut voir les prochains matchs et les statistiques des joueurs.
 
-### Workout Management
-- Users can create workouts, specifying name, date, length, and participating players.
-- Workouts can be listed, deleted, and reviewed to check player participation.
-- Security measures are in place to prevent unauthorized database access via forms or URL parameters.
+### Gestion des Entraînements
+- Les utilisateurs peuvent créer des entraînements en spécifiant un nom, une date, une durée et les joueurs participants.
+- Les entraînements peuvent être listés, supprimés et revus pour vérifier la participation des joueurs.
+- Des mesures de sécurité sont en place pour empêcher tout accès non autorisé à la base de données via des formulaires ou des paramètres d’URL.
 
-### Game Management
-- Create basketball matchups with scores (or update scores later).
-- Modify existing games as needed.
-- Delete games when necessary.
-- View a player’s performance in a match.
-- Calculate player statistics based on match performances.
-
----
-
-## How to Use
-
-### 1. Modify the Database Connection
-To make the system functional, you need to modify the `connect.php` file. This file contains the database connection settings, which must be updated with your own database credentials.
-- In the `connect.php` file, you'll find placeholders for:
-  - `DNS` (Database source name)
-  - `LOGIN` (Your database username)
-  - `PASSWORD` (Your database password)
-- Replace these placeholders with your actual database information.
-
-### 2. Database Configuration
-- A copy of the required database schema will be provided, so you can import it into your MySQL database. This database contains all the necessary tables and relationships to support the application’s functionality (e.g., users, roles, games, workouts).
-
-### 3. Setup Process
-- Ensure you have PHP and MySQL (or MariaDB) installed on your system.
-- Import the provided database schema into your MySQL/MariaDB instance.
-- Configure the `connect.php` file with your database credentials.
-- Once everything is set up, the application will be ready for use. You can create accounts, log in, and use all the associated functionalities.
-
----
-# User Management Function
-
-The **User Management** functionality allows for easy user creation, login, and account recovery. It provides a secure system to manage user accounts and ensure appropriate access levels based on user roles. Here's a detailed breakdown of how these functions work.
-
-## Account Creation
-
-- A user can create a new account by filling out a registration form with the following fields:
-  - **Username**: A unique identifier for the user.
-  - **Email**: A valid email address. This is necessary for account recovery and communication.
-  - **Password**: A password that is securely hashed before being stored in the database. The password must meet certain security criteria, such as length and complexity (which may be specified later).
-
-- Once a user submits their account details, the system will:
-  - **Verify the password**: A secure hashing algorithm (e.g., bcrypt) is used to ensure the password is not stored in plaintext in the database.
-  - **Check for unique username and email**: The system will verify that the username and email are not already taken by another user.
-  - **Assign the "User" role**: Upon successful account creation, the user is automatically assigned the "User" role. This means they have limited access (e.g., they can view upcoming games and player stats, but can't manage workouts or games).
-
-- The new account details are saved in the database, and the user can then proceed to log in with their username and password.
-
-## Login and Sessions
-
-- After creating an account, a user can log in by providing their **username** and **password** through a login page.
-  - **Session Handling**: Upon successful login, a session is created for the user, storing their username and role to identify them on subsequent pages.
-  - Based on the user's role (e.g., Admin, Manager, Coach, Assistant, Player, or User), the system customizes their experience. Each role has access to specific features, and the user will see a personalized profile page with their relevant information.
-
-- **Session Expiry**: If a user remains inactive for a certain period, their session may expire, requiring them to log in again for security purposes.
-
-## Account Recovery (Forgot Password)
-
-- If a user forgets their password, they can recover their account by entering their **email address** on a specific recovery page.
-  - **Token Generation**: A unique token is generated and sent to the user's email address. This token is valid for 1 hour, during which the user can reset their password.
-  - **Password Reset Form**: Once the user receives the email with the token, they can use it to access a password reset form, where they can input a new password.
-  - **Expiry Check**: The token will expire after 1 hour, and any attempt to use an expired token will result in an error message.
-  - **Security**: The system ensures that the token can only be used once, and passwords are securely updated in the database after the reset.
-
----
-### Workout Management Function
-
-The **Workout Management Function** allows authorized users to create, manage, and attend basketball workouts. The functionality is divided into three main parts:
-
-#### 1. Workout Creation
-- **Description**: 
-    From the menu, a user with the appropriate permissions can access the **"Create a Workout"** page. This page provides a form to input the workout name, date, and duration. The form ensures that the date entered is not more than 1 year before or after the current date.
-  
-- **Allowed Roles**: 
-    - Admin
-    - Manager
-    - Coach
-  
-- **Form Fields**: 
-    - **Workout Name**: A name for the workout session.
-    - **Date**: The date of the workout. Must be within 1 year before or after the current date.
-    - **Duration**: The length of the workout session.
-
-#### 2. Manage Workout Attendance
-- **Description**: 
-    Authorized users can access the **"Manage Workout Attendance"** page. Here, they can add players to existing workouts. The page will only show workouts that the player is not already assigned to.
-  
-- **Allowed Roles**: 
-    - Admin
-    - Manager
-    - Coach
-    - Assistant
-  
-- **Form Behavior**: 
-    - The form will display a list of available workouts that the player is not already part of.
-    - The user can select a player to add to a workout session.
-
-#### 3. Workout Chart
-- **Description**: 
-    From the menu, users can enter the **"Workout List"** page. This page displays all the existing workouts. Users can click on a specific workout to view the details, including who is participating, the date, and the duration. Users with the correct permissions can also delete workouts.
-
-- **Permissions**:
-    - **Allowed Roles**: 
-        - Admin
-        - Manager
-        - Coach
-        - Assistant
-        - Player
-  
-    - **Permissions to Delete a Workout**:
-        - Admin
-        - Manager
-        - Coach
-
-- **Functionality**:
-    - View the list of workouts.
-    - See the participating players for each workout.
-    - View workout details (date, duration).
-    - Delete workouts if the user has the required permissions.
+### Gestion des Matchs
+- Créer des rencontres de basketball avec des scores (ou mettre à jour les scores plus tard).
+- Modifier les matchs existants si nécessaire.
+- Supprimer des matchs au besoin.
+- Voir la performance d’un joueur lors d’un match.
+- Calculer les statistiques des joueurs en fonction de leurs performances en match.
 
 ---
 
-## How to Use
+## Comment Utiliser
 
-### 1. **Create a Workout**:
-To create a workout, navigate to the "Create a Workout" page from the main menu. Ensure that you input a valid date and duration for the workout. You can only create a workout within the date range allowed (within 1 year before or after the current date).
+### 1. Modifier la Connexion à la Base de Données
+Pour que le système fonctionne, vous devez modifier le fichier `connect.php`. Ce fichier contient les paramètres de connexion à la base de données, qui doivent être mis à jour avec vos propres identifiants.
+- Dans le fichier `connect.php`, vous trouverez des espaces réservés pour :
+  - `DNS` (Nom de la source de données)
+  - `LOGIN` (Votre nom d'utilisateur pour la base de données)
+  - `PASSWORD` (Votre mot de passe pour la base de données)
+- Remplacez ces espaces réservés par vos informations réelles de base de données.
 
-### 2. **Manage Workout Attendance**:
-To manage workout attendance, go to the "Manage Workout Attendance" page. This will show a list of available workouts that players are not yet added to. Select a player from the list and add them to the workout session.
+### 2. Configuration de la Base de Données
+- Une copie du schéma de base de données requis sera fournie afin que vous puissiez l’importer dans votre base MySQL. Cette base contient toutes les tables et relations nécessaires au bon fonctionnement de l’application (ex. : utilisateurs, rôles, matchs, entraînements).
 
-### 3. **Workout Chart**:
-To see a list of existing workouts, go to the "Workout List" page. From there, you can view workout details, see participating players, and delete the workout if you have the right permissions.
-
----
-
-## Technical Details
-
-### Database Protection
-We have added protections to prevent unauthorized access or manipulation of workout data through form submissions or direct URL manipulations. Proper validation and sanitization have been applied to forms and inputs to protect against common security vulnerabilities such as SQL injection and XSS (Cross-Site Scripting).
-
----
-# Game Management Function
-
-The **Game Management** functionality allows the management of basketball games, teams, and players. It provides tools for creating games, updating scores, and tracking player performance. Depending on the role of the user, they may have different permissions to view, create, modify, or delete games.
-
-## Teams and Players Chart
-
-### Description:
-From the menu, click on the page **"Teams and Players Chart"**. This page displays a list of all teams, showing the number of wins each team has. The win count is automatically updated based on the results of the games created later on. For example, when a team wins a game, their win count will increase by one. You can also access each team's player list, and by clicking on a player, you will be able to view their individual stats.
-
-In the player's stats page, you can see the games they have participated in, along with their average stats.
-
-### Permissions:
-- **View**: Everyone
+### 3. Processus d’Installation
+- Assurez-vous d’avoir PHP et MySQL (ou MariaDB) installés sur votre système.
+- Importez le schéma de base de données fourni dans votre instance MySQL/MariaDB.
+- Configurez le fichier `connect.php` avec vos identifiants de base de données.
+- Une fois l’installation terminée, l’application sera prête à l’emploi. Vous pourrez créer des comptes, vous connecter et utiliser toutes les fonctionnalités associées.
 
 ---
 
-## Game Creation/Planning
+# Fonctionnalité de Gestion des Utilisateurs
 
-### Description:
-From the menu, click on **"Manage Games"** to enter the game creation and planning page. Here, users with appropriate permissions can create a new game. They can specify the teams involved, the date of the game, the score (if available), and the location of the game. The score can be left blank initially and updated later. The form is protected against any form tampering to ensure valid data submission.
+La **gestion des utilisateurs** permet une création de comptes simple, une connexion sécurisée et une récupération de compte en cas d’oubli de mot de passe. Cette section détaille les principales fonctionnalités.
 
-### Permissions:
-- **Admin**: Can create, modify, and delete games.
-- **Manager**: Can create and modify games.
+## Création de Compte
+
+- Un utilisateur peut créer un nouveau compte en remplissant un formulaire d’inscription comprenant :
+  - **Nom d'utilisateur** : Identifiant unique.
+  - **Email** : Adresse email valide pour la récupération de compte et la communication.
+  - **Mot de passe** : Stocké de manière sécurisée (hachage avec bcrypt).
+  - **Vérification** : Assure que l'email et le nom d'utilisateur ne sont pas déjà pris.
+  - **Attribution de rôle** : L’utilisateur est par défaut assigné au rôle "Utilisateur Normal".
+
+## Connexion et Sessions
+
+- Une fois inscrit, l’utilisateur peut se connecter en entrant son **nom d’utilisateur** et **mot de passe**.
+  - **Gestion des sessions** : Une session est créée pour identifier l’utilisateur et appliquer les restrictions d’accès selon son rôle.
+  - **Expiration de session** : Après une période d’inactivité, l’utilisateur devra se reconnecter.
+
+## Récupération de Compte (Mot de Passe Oublié)
+
+- En cas d’oubli, l’utilisateur peut entrer son **email** sur la page de récupération.
+  - **Génération de jeton sécurisé** : Un lien unique est envoyé par email et est valide pendant 1 heure.
+  - **Formulaire de réinitialisation** : Permet à l’utilisateur de saisir un nouveau mot de passe.
+  - **Vérification d’expiration** : Le jeton expire après 1 heure.
+  - **Sécurité** : Un jeton ne peut être utilisé qu’une seule fois.
 
 ---
 
-## Game Chart
+### Fonctionnalité de Gestion des Entraînements
 
-### Description:
-From the menu, click on **"Game Chart"** to view a list of all games that have been played (games that have scores filled in). Here, you can modify existing games, remove them, and view player performance for each game.
+La **gestion des entraînements** permet aux utilisateurs autorisés de créer, gérer et suivre la participation des joueurs.
 
-### Permissions:
-- **View**: Everyone
-- **Modify/Delete**: Admin, Manager
+#### 1. Création d’un Entraînement
+- **Description** : Un formulaire permet d’entrer le nom, la date et la durée de l’entraînement.
+- **Rôles autorisés** :
+  - Admin
+  - Manager
+  - Coach
+- **Contraintes** :
+  - La date doit être dans l’intervalle d’un an avant ou après la date actuelle.
+
+#### 2. Gestion de la Participation
+- **Description** : Permet d’ajouter des joueurs à un entraînement.
+- **Rôles autorisés** :
+  - Admin
+  - Manager
+  - Coach
+  - Assistant
+
+#### 3. Liste des Entraînements
+- **Affichage** : Liste des entraînements existants avec leurs détails (joueurs participants, durée, date).
+- **Permissions** :
+  - Tous les utilisateurs peuvent consulter.
+  - Suppression réservée aux Admins, Managers et Coachs.
 
 ---
 
-## Add Scores to Planned Games
+# Fonctionnalité de Gestion des Matchs
 
-### Description:
-From the menu, click on **"Modify Planned Games"** to view a list of games that have been created but do not yet have scores assigned. You can enter scores for these games, modify the date or location, and finalize the game details. This functionality helps to complete the match information once the game has been played.
+La **gestion des matchs** permet de créer des rencontres, enregistrer des scores et suivre les performances des joueurs.
 
-### Permissions:
-- **Admin**: Can add scores and modify game details.
-- **Manager**: Can add scores and modify game details.
+## Tableau des Équipes et Joueurs
+- **Affichage** : Liste des équipes avec leur nombre de victoires mis à jour automatiquement.
+- **Consultation** : Statistiques des joueurs et historique des matchs.
+- **Permissions** : Accessible à tous.
 
+## Création/Planification des Matchs
+- **Ajout d’un match** : Sélection des équipes, date, lieu et score (peut être ajouté plus tard).
+- **Rôles autorisés** :
+  - Admin (création, modification, suppression)
+  - Manager (création, modification)
+
+## Suivi des Matchs
+- **Affichage des matchs joués** avec leurs résultats.
+- **Modification/Suppression** : Réservé aux Admins et Managers.
+
+## Ajout des Scores aux Matchs Planifiés
+- **Mise à jour des résultats après un match joué**.
+- **Rôles autorisés** :
+  - Admin
+  - Manager
+
+---
+
+## Détails Techniques
+
+### Protection de la Base de Données
+Des mesures de sécurité sont mises en place pour empêcher toute modification non autorisée des données via des soumissions de formulaires ou la manipulation directe des URL :
+- Validation et filtrage des entrées.
+- Protection contre les injections SQL et attaques XSS.
+
+---
