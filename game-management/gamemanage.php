@@ -48,7 +48,17 @@ include "../permission.inc.php";
             $sqlteam1 = 'SELECT * FROM Equipe ';
             $statementteam1 = $db->prepare($sqlteam1);
             $statementteam1->execute(); // Selects all the teams in the form
-    
+            
+            if (isset($_POST['teamname1'])){
+                $sqlshowteamname = 'SELECT * FROM Equipe 
+                                    WHERE EquipeID = :id';
+
+                $statementshowteamname= $db->prepare($sqlshowteamname);
+                $statementshowteamname->bindParam(':id', $_POST['teamname1']);
+                $statementshowteamname->execute();
+
+                $rowname = $statementshowteamname->fetch();
+            }
             // Form for selecting the first team
             echo 
             '<div>
@@ -56,10 +66,15 @@ include "../permission.inc.php";
                     <h2>Select the first team and its Score</h2>
                     <label for="teamname1">First Team</label>
                     <select id="teamname1" name="teamname1" required>';
-    
-                while ($row = $statementteam1->fetch()) {
-                    echo '<option value="' . $row['EquipeID'] . '">' . $row['NomEquipe'] . '</option>';
-            }
+                    if (isset($_POST['teamname1'])){
+                        
+                        echo '<option value="'.$_POST['teamname1'].'">'.$rowname['NomEquipe'].'</option>';
+                    }
+                    
+                        while ($row = $statementteam1->fetch()) {
+                            echo '<option value="' . $row['EquipeID'] . '">' . $row['NomEquipe'] . '</option>';
+                        }
+                   
             echo '
                     </select>
                     <label for="scoreteam1">Score</label>
@@ -123,6 +138,12 @@ include "../permission.inc.php";
                     
                     // Handling the game submission
                     if (isset($_POST['gamelocation']) && !empty($_POST['gamelocation'])) {
+                        
+                        if($_POST['teamname1'] == $_POST['teamname2']){
+                            echo '<h1> An error as occured, please do not choose the same team twice</h1>';
+                            exit(); 
+                        }
+                        
                         $sqlcheckteam2='SELECT count(EquipeID) as CountEquipe FROM Equipe
                                         WHERE EquipeID = :id';
                         $statementcheckteam2= $db->prepare($sqlcheckteam2);

@@ -93,11 +93,22 @@
                 }
 
                 $statement->closeCursor();
-                $db = null; 
             } 
             } 
 
             else {
+                if (!isset($_SESSION['roleid'])){
+                    $sqlrole= 'SELECT RoleID FROM Disposer 
+                    WHERE UserID = :id';
+                    $statementrole = $db->prepare($sqlrole);
+                    $statementrole->bindParam(':id', $_SESSION['id']);
+                    $statementrole->execute();
+
+                    $row = $statementrole->fetch();
+                    $_SESSION['roleid'] = $row['RoleID'];
+
+                    $statementrole->closeCursor();
+                }
             echo '
             <div class="grid">
             <div class="button-container"><a href="workout-management/createworkout.php" class="contrast">Create a Workout</a></div>
@@ -109,6 +120,7 @@
             <div class="button-container"><a href="game-management/manageexistinggames.php" class="contrast">Modify Planned Games</a></div>
             </div>';
             }
+            $db = null;
             ?> 
         </main>
     </body>
