@@ -85,9 +85,9 @@ include "../permission.inc.php";
                             <th>Score</th>
                             <th>Equipe 2</th>
                             <th>Lieu</th>
-                            <th>Performance</th>
-                            <th>Modify</th>';
+                            <th>Performance</th>';
                             if ($_SESSION['roleid'] == 1 || $_SESSION['roleid'] == 2){
+                                echo '<th>Modify</th>';
                                 echo '<th>Delete</th>';
                             }
                         echo '</tr>';
@@ -107,10 +107,10 @@ include "../permission.inc.php";
                                 <td> <span class="won">'.$row['ScoreEquipe1'].'</span> - <span class="lost">'.$row['ScoreEquipe2'].'</span></td>
                                 <td>'.$row['e2'].'</td>
                                 <td>'.$row['Lieu'].'</td>
-                                <td><a href="performance.php?match='.$row['RencontreID'].'">Performance</a></td>
-                                <td><a href="modifygame.php?matchid='.$row['RencontreID'].'">Modify</a></td>';
+                                <td><a href="performance.php?match=' . $row['RencontreID'] . '">Performance</a></td>';
                                 if ($_SESSION['roleid'] == 1 || $_SESSION['roleid'] == 2){
-                                echo '<td><a href="deletegame.php?gameid='.$row['RencontreID'].'" onclick="return confirm(\'Are you sure you want to delete this game?\')"><button class="button-suppression">X</button></a></td>';
+                                   echo '<td><a href="modifygame.php?matchid='.$row['RencontreID'].'">Modify</a></td>';
+                                    echo '<td><a href="deletegame.php?gameid='.$row['RencontreID'].'" onclick="return confirm(\'Are you sure you want to delete this game?\')"><button class="button-suppression">X</button></a></td>';
                                 }
                                 echo '</tr>';
                         }
@@ -122,9 +122,9 @@ include "../permission.inc.php";
                                 <td>'.$row['ScoreEquipe2'].' - '.$row['ScoreEquipe1'].'</td>
                                 <td>' . $row['e2'] . '</td>
                                 <td>' . $row['Lieu'] . '</td>
-                                <td><a href="performance.php?match=' . $row['RencontreID'] . '">Performance</a></td>
-                                <td><a href="modifygame.php?matchid='.$row['RencontreID'].'">Modify</a></td>';
+                                <td><a href="performance.php?match=' . $row['RencontreID'] . '">Performance</a></td>';
                                 if ($_SESSION['roleid'] == 1 || $_SESSION['roleid'] == 2){
+                                   echo '<td><a href="modifygame.php?matchid='.$row['RencontreID'].'">Modify</a></td>';
                                     echo '<td><a href="deletegame.php?gameid='.$row['RencontreID'].'" onclick="return confirm(\'Are you sure you want to delete this game?\')"><button class="button-suppression">X</button></a></td>';
                                 }
                                 echo '</tr>';
@@ -140,9 +140,9 @@ include "../permission.inc.php";
                                 <td>'.$row['ScoreEquipe1'].' - '.$row['ScoreEquipe2'].'</td>
                                 <td>' . $row['e1'] . '</td>
                                 <td>' . $row['Lieu'] . '</td>
-                                <td><a href="performance.php?match=' . $row['RencontreID'] . '">Performance</a></td>
-                                <td><a href="modifygame.php?matchid='.$row['RencontreID'].'">Modify</a></td>';
+                                <td><a href="performance.php?match=' . $row['RencontreID'] . '">Performance</a></td>';
                                 if ($_SESSION['roleid'] == 1 || $_SESSION['roleid'] == 2){
+                                   echo '<td><a href="modifygame.php?matchid='.$row['RencontreID'].'">Modify</a></td>';
                                     echo '<td><a href="deletegame.php?gameid='.$row['RencontreID'].'" onclick="return confirm(\'Are you sure you want to delete this game?\')"><button class="button-suppression">X</button></a></td>';
                                 }
                                 echo '</tr>';
@@ -155,9 +155,9 @@ include "../permission.inc.php";
                                 <td>'.$row['ScoreEquipe2'].' - '.$row['ScoreEquipe1'].'</td>
                                 <td>' . $row['e1'] . '</td>
                                 <td>' . $row['Lieu'] . '</td>
-                                <td><a href="performance.php?match=' . $row['RencontreID'] . '">Performance</a></td>
-                                <td><a href="modifygame.php?matchid='.$row['RencontreID'].'">Modify</a></td>';
+                                <td><a href="performance.php?match=' . $row['RencontreID'] . '">Performance</a></td>';
                                 if ($_SESSION['roleid'] == 1 || $_SESSION['roleid'] == 2){
+                                   echo '<td><a href="modifygame.php?matchid='.$row['RencontreID'].'">Modify</a></td>';
                                     echo '<td><a href="deletegame.php?gameid='.$row['RencontreID'].'" onclick="return confirm(\'Are you sure you want to delete this game?\')"><button class="button-suppression">X</button></a></td>';
                                 }
                                 echo '</tr>';
@@ -172,11 +172,11 @@ include "../permission.inc.php";
                             <td>'.$row['ScoreEquipe1'].' - '.$row['ScoreEquipe2'].'</td>
                             <td>' . $row['e2'] . '</td>
                             <td>' . $row['Lieu'] . '</td>
-                            <td><a href="performance.php?match=' . $row['RencontreID'] . '">Performance</a></td>
-                            <td><a href="modifygame.php?matchid='.$row['RencontreID'].'">Modify</a></td>';
-                            if ($_SESSION['roleid'] == 1 || $_SESSION['roleid'] == 2){
-                                echo '<td><a href="deletegame.php?gameid='.$row['RencontreID'].'" onclick="return confirm(\'Are you sure you want to delete this game?\')"><button class="button-suppression">X</button></a></td>';
-                            }
+                                <td><a href="performance.php?match=' . $row['RencontreID'] . '">Performance</a></td>';
+                                if ($_SESSION['roleid'] == 1 || $_SESSION['roleid'] == 2){
+                                   echo '<td><a href="modifygame.php?matchid='.$row['RencontreID'].'">Modify</a></td>';
+                                    echo '<td><a href="deletegame.php?gameid='.$row['RencontreID'].'" onclick="return confirm(\'Are you sure you want to delete this game?\')"><button class="button-suppression">X</button></a></td>';
+                                }
                             echo '</tr>';
                     }
                 }
