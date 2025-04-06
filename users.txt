@@ -1,0 +1,23 @@
+Administrator : 
+User : Administrator
+Password : BD9KxhUfwAsfWU
+
+Manager : 
+User : Manager-Account
+Password : R400LmEzwpXvA1
+
+Coach : 
+User : Coach-Account
+Password : OSMu8XgjkeN0HC 
+
+Assistant : 
+User : Assistant-Account
+Password : S1iyqxKjPJ87el
+
+Player : 
+User : Player-Account
+Password : otZYpif8uiJLWF
+
+Normal User : 
+User : User-Account
+Password : CbdPvG8NDYr440
