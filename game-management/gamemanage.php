@@ -169,6 +169,7 @@ include "../permission.inc.php";
 
                             //Puts the user input into datetime format for comparison.
                             $userDate = DateTime::createFromFormat('Y-m-d\TH:i', $_POST['gamedate']);
+                            $gameDate = $userDate->format('Y-m-d H:i:s');
                             
                         if ($userDate > $datelimitadd || $userDate < $datelimitsub) {
                             echo '<h2 class="message error">Please input a valid date</h2>';
@@ -179,15 +180,23 @@ include "../permission.inc.php";
                             $sql = 'INSERT INTO Rencontre (DateRencontre, ScoreEquipe1, ScoreEquipe2, Lieu) 
                             VALUES (:gamedate, :scoreteam1, :scoreteam2, :gamelocation)'; // Inserts into the database
                             $statement = $db->prepare($sql);
-                            $statement->bindParam(':gamedate', $_POST['gamedate']);
+                            $statement->bindParam(':gamedate', $gameDate);
                             
                             //Adds scores if it exist
-                            if (isset ($_POST['scoreteam1'])){
+                            if (!empty($_POST['scoreteam1'])){
                                 $statement->bindParam(':scoreteam1', $scoreteam1);
                             }
+                            else {
+                                $scoreteam1 = null;
+                                $statement->bindParam(':scoreteam1',$scoreteam1);
+                            }
                             //Adds score if it exist 
-                            if (isset ($_POST['scoreteam2'])){
+                            if (!empty($_POST['scoreteam2'])){
                                 $statement->bindParam(':scoreteam2', $scoreteam2);
+                            }
+                            else{
+                                $scoreteam2 = null;
+                                $statement->bindParam(':scoreteam2',$scoreteam2);
                             }
 
                             $statement->bindParam(':gamelocation', $_POST['gamelocation']); // Preparing to insert data I will get later.
