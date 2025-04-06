@@ -2,10 +2,10 @@
 -- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
--- Hôte : localhost
--- Généré le : ven. 31 jan. 2025 à 12:09
--- Version du serveur : 10.11.6-MariaDB-0+deb12u1
--- Version de PHP : 8.2.26
+-- Host: localhost
+-- Generation Time: Apr 06, 2025 at 03:29 PM
+-- Server version: 10.11.11-MariaDB-0+deb12u1
+-- PHP Version: 8.2.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,25 +18,25 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `adjedjm_basket`
+-- Database: `adjedjm_basket`
 --
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `ACCEDER`
+-- Table structure for table `Acceder`
 --
 
-CREATE TABLE `ACCEDER` (
-  `idPage` int(11) NOT NULL,
-  `idRole` int(11) NOT NULL
+CREATE TABLE `Acceder` (
+  `PageID` int(11) NOT NULL,
+  `RoleID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `ACCEDER`
+-- Dumping data for table `Acceder`
 --
 
-INSERT INTO `ACCEDER` (`idPage`, `idRole`) VALUES
+INSERT INTO `Acceder` (`PageID`, `RoleID`) VALUES
 (3, 1),
 (3, 2),
 (3, 3),
@@ -115,32 +115,54 @@ INSERT INTO `ACCEDER` (`idPage`, `idRole`) VALUES
 (17, 3),
 (17, 4),
 (17, 5),
-(17, 6);
+(17, 6),
+(18, 1),
+(19, 1),
+(19, 2),
+(20, 1),
+(20, 2),
+(22, 1),
+(22, 2),
+(22, 3),
+(22, 4),
+(22, 5),
+(22, 6),
+(23, 1),
+(23, 2),
+(24, 1),
+(24, 2);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `DISPOSER`
+-- Table structure for table `Disposer`
 --
 
-CREATE TABLE `DISPOSER` (
-  `idRole` int(11) NOT NULL,
-  `User_ID` int(11) NOT NULL
+CREATE TABLE `Disposer` (
+  `RoleID` int(11) NOT NULL,
+  `UserID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `DISPOSER`
+-- Dumping data for table `Disposer`
 --
 
-INSERT INTO `DISPOSER` (`idRole`, `User_ID`) VALUES
+INSERT INTO `Disposer` (`RoleID`, `UserID`) VALUES
 (1, 1),
+(2, 2),
 (3, 3),
-(6, 7);
+(4, 4),
+(5, 5),
+(6, 2),
+(6, 3),
+(6, 4),
+(6, 5),
+(6, 6);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `Entrainement`
+-- Table structure for table `Entrainement`
 --
 
 CREATE TABLE `Entrainement` (
@@ -151,19 +173,18 @@ CREATE TABLE `Entrainement` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `Entrainement`
+-- Dumping data for table `Entrainement`
 --
 
 INSERT INTO `Entrainement` (`EntrainementID`, `DateEntrainement`, `Duree`, `TypeEntrainement`) VALUES
-(1, '2025-01-18 14:00:00', '00:00:04', 'Shooting Workout'),
-(2, '2025-01-19 09:30:00', '00:00:02', 'Driblling Workout'),
-(3, '2025-01-19 15:00:00', '00:00:01', 'Running Workout'),
-(4, '2025-01-21 14:00:00', '00:00:03', 'Free Practice');
+(1, '2025-04-08 16:00:00', '00:00:03', 'Shooting Workout'),
+(2, '2025-04-09 17:00:00', '00:00:01', 'Driblling Workout'),
+(3, '2025-10-04 16:00:00', '00:00:04', 'Conditioning');
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `Equipe`
+-- Table structure for table `Equipe`
 --
 
 CREATE TABLE `Equipe` (
@@ -173,7 +194,7 @@ CREATE TABLE `Equipe` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `Equipe`
+-- Dumping data for table `Equipe`
 --
 
 INSERT INTO `Equipe` (`EquipeID`, `NomEquipe`, `Ville`) VALUES
@@ -191,10 +212,10 @@ INSERT INTO `Equipe` (`EquipeID`, `NomEquipe`, `Ville`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `JOUER`
+-- Table structure for table `Jouer`
 --
 
-CREATE TABLE `JOUER` (
+CREATE TABLE `Jouer` (
   `RencontreID` int(11) NOT NULL,
   `EquipeID` int(11) NOT NULL,
   `Score` int(255) DEFAULT NULL,
@@ -202,33 +223,37 @@ CREATE TABLE `JOUER` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `JOUER`
+-- Dumping data for table `Jouer`
 --
 
-INSERT INTO `JOUER` (`RencontreID`, `EquipeID`, `Score`, `EST_GAGNANT`) VALUES
-(1, 1, NULL, 1),
-(1, 2, NULL, 0),
-(2, 3, NULL, 0),
-(2, 4, NULL, 1),
-(3, 5, NULL, -1),
-(3, 6, NULL, -1),
-(4, 7, NULL, 0),
-(4, 8, NULL, 1),
-(5, 9, NULL, 1),
-(5, 10, NULL, 0),
-(6, 1, NULL, 1),
-(6, 8, NULL, 0),
-(7, 1, NULL, 0),
-(7, 2, NULL, 1),
-(8, 2, NULL, 0),
-(8, 3, NULL, 1),
-(9, 4, NULL, 1),
-(9, 8, NULL, 0);
+INSERT INTO `Jouer` (`RencontreID`, `EquipeID`, `Score`, `EST_GAGNANT`) VALUES
+(1, 1, NULL, -1),
+(1, 2, NULL, -1),
+(2, 1, 119, 1),
+(2, 3, 115, 0),
+(3, 2, 96, 0),
+(3, 3, 104, 1),
+(4, 4, 121, 0),
+(4, 5, 122, 1),
+(5, 4, 121, 1),
+(5, 6, 105, 0),
+(6, 5, 85, 0),
+(6, 6, 115, 1),
+(7, 7, 95, 0),
+(7, 8, 155, 1),
+(8, 7, 95, 0),
+(8, 9, 112, 1),
+(9, 8, 120, 0),
+(9, 9, 125, 1),
+(10, 9, 125, 1),
+(10, 10, 115, 0),
+(11, 3, 115, 1),
+(11, 10, 112, 0);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `Membre`
+-- Table structure for table `Membre`
 --
 
 CREATE TABLE `Membre` (
@@ -242,7 +267,7 @@ CREATE TABLE `Membre` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `Membre`
+-- Dumping data for table `Membre`
 --
 
 INSERT INTO `Membre` (`MembreID`, `Nom`, `Prenom`, `DateNaissance`, `Role`, `Email`, `NumeroMaillot`) VALUES
@@ -300,7 +325,7 @@ INSERT INTO `Membre` (`MembreID`, `Nom`, `Prenom`, `DateNaissance`, `Role`, `Ema
 -- --------------------------------------------------------
 
 --
--- Structure de la table `MembresEquipe`
+-- Table structure for table `MembresEquipe`
 --
 
 CREATE TABLE `MembresEquipe` (
@@ -309,7 +334,7 @@ CREATE TABLE `MembresEquipe` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `MembresEquipe`
+-- Dumping data for table `MembresEquipe`
 --
 
 INSERT INTO `MembresEquipe` (`EquipeID`, `MembreID`) VALUES
@@ -367,20 +392,20 @@ INSERT INTO `MembresEquipe` (`EquipeID`, `MembreID`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `PAGE`
+-- Table structure for table `Page`
 --
 
-CREATE TABLE `PAGE` (
-  `idPage` int(11) NOT NULL,
+CREATE TABLE `Page` (
+  `PageID` int(11) NOT NULL,
   `Description` varchar(255) DEFAULT NULL,
   `NomPage` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `PAGE`
+-- Dumping data for table `Page`
 --
 
-INSERT INTO `PAGE` (`idPage`, `Description`, `NomPage`) VALUES
+INSERT INTO `Page` (`PageID`, `Description`, `NomPage`) VALUES
 (3, 'Menu + Login page', 'index.php'),
 (4, 'Account creation.', 'creation.php'),
 (5, 'Disconnection', 'disconnect.php'),
@@ -395,24 +420,30 @@ INSERT INTO `PAGE` (`idPage`, `Description`, `NomPage`) VALUES
 (14, 'Add players to a workout.', 'workout.php'),
 (15, 'Workout creation', 'createworkout.php'),
 (16, 'Add and manage games.', 'gamemanage.php'),
-(17, 'Performance in mathches', 'performance.php');
+(17, 'Performance in mathches', 'performance.php'),
+(18, 'Administration panel, can modify roles only accessed by Admins.', 'adminpanel.php'),
+(19, 'Page that lets you modify games that have not been played', 'manageexistinggames.php'),
+(20, 'Modify the score of games and validate them', 'modify.php'),
+(22, 'La page profile d\'un utilisateur', 'profile.php'),
+(23, 'Script that deletes workouts', 'deleteworkout.php'),
+(24, 'Lets you modify existing games', 'modifygame.php');
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `PARTICIPER`
+-- Table structure for table `Participer`
 --
 
-CREATE TABLE `PARTICIPER` (
+CREATE TABLE `Participer` (
   `EntrainementID` int(11) NOT NULL,
   `MembreID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `PARTICIPER`
+-- Dumping data for table `Participer`
 --
 
-INSERT INTO `PARTICIPER` (`EntrainementID`, `MembreID`) VALUES
+INSERT INTO `Participer` (`EntrainementID`, `MembreID`) VALUES
 (1, 1),
 (1, 2),
 (1, 3),
@@ -423,23 +454,18 @@ INSERT INTO `PARTICIPER` (`EntrainementID`, `MembreID`) VALUES
 (2, 8),
 (2, 9),
 (2, 10),
-(2, 14),
-(2, 15),
 (3, 11),
 (3, 12),
-(4, 16),
-(4, 17),
-(4, 18),
-(4, 19),
-(4, 20);
+(3, 14),
+(3, 15);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `PERFORMANCE`
+-- Table structure for table `Performance`
 --
 
-CREATE TABLE `PERFORMANCE` (
+CREATE TABLE `Performance` (
   `MembreID` int(11) NOT NULL,
   `RencontreID` int(11) NOT NULL,
   `Points` int(11) DEFAULT NULL,
@@ -449,105 +475,125 @@ CREATE TABLE `PERFORMANCE` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `PERFORMANCE`
+-- Dumping data for table `Performance`
 --
 
-INSERT INTO `PERFORMANCE` (`MembreID`, `RencontreID`, `Points`, `Assists`, `Rebonds`, `MinutesJouees`) VALUES
-(1, 1, 30, 7, 7, 40),
-(1, 6, 40, 13, 8, 40),
-(1, 7, 8, 15, 12, 40),
-(2, 1, 19, 16, 5, 40),
-(2, 6, 21, 11, 6, 40),
-(2, 7, 14, 8, 7, 40),
-(3, 1, 18, 18, 14, 40),
-(3, 6, 22, 8, 7, 40),
-(3, 7, 11, 5, 13, 40),
-(4, 1, 26, 8, 6, 40),
-(4, 6, 12, 14, 15, 40),
-(4, 7, 36, 2, 4, 40),
-(5, 1, 9, 2, 12, 40),
-(5, 6, 16, 11, 13, 40),
-(5, 7, 37, 8, 20, 40),
-(6, 1, 13, 5, 20, 40),
-(6, 7, 22, 7, 17, 40),
-(6, 8, 28, 3, 1, 40),
-(7, 1, 31, 17, 10, 40),
-(7, 7, 6, 12, 6, 40),
-(7, 8, 21, 14, 3, 40),
-(8, 1, 20, 14, 4, 40),
-(8, 7, 29, 5, 6, 40),
-(8, 8, 10, 4, 12, 40),
-(9, 1, 2, 1, 4, 40),
-(9, 7, 6, 9, 1, 40),
-(9, 8, 7, 20, 9, 40),
-(10, 1, 34, 9, 5, 40),
-(10, 7, 38, 10, 19, 40),
-(10, 8, 25, 14, 15, 40),
-(11, 2, 8, 6, 14, 40),
-(11, 8, 20, 1, 16, 40),
-(12, 2, 18, 12, 14, 40),
-(12, 8, 9, 7, 1, 40),
-(13, 2, 0, 15, 16, 40),
-(13, 8, 10, 20, 20, 40),
-(14, 2, 37, 20, 4, 40),
-(14, 8, 14, 20, 5, 40),
-(15, 2, 8, 13, 14, 40),
-(15, 8, 13, 4, 14, 40),
-(16, 2, 3, 20, 16, 40),
-(16, 9, 32, 10, 17, 40),
-(17, 2, 19, 18, 13, 40),
-(17, 9, 7, 11, 8, 40),
-(18, 2, 18, 9, 1, 40),
-(18, 9, 12, 20, 1, 40),
-(19, 2, 26, 3, 20, 40),
-(19, 9, 34, 4, 6, 40),
-(20, 2, 25, 5, 3, 40),
-(20, 9, 22, 8, 20, 40),
-(21, 3, 25, 3, 16, 40),
-(22, 3, 23, 18, 8, 40),
-(23, 3, 12, 13, 9, 40),
-(24, 3, 34, 3, 5, 40),
-(25, 3, 34, 8, 4, 40),
-(26, 3, 33, 14, 10, 40),
-(27, 3, 30, 4, 12, 40),
-(28, 3, 21, 7, 4, 40),
-(29, 3, 28, 5, 15, 40),
-(30, 3, 7, 20, 19, 40),
-(31, 4, 14, 17, 16, 40),
-(32, 4, 40, 16, 11, 40),
-(33, 4, 34, 16, 18, 40),
-(34, 4, 14, 11, 2, 40),
-(35, 4, 7, 4, 19, 40),
-(36, 4, 5, 17, 12, 40),
-(36, 6, 3, 9, 16, 40),
-(36, 9, 6, 15, 1, 40),
-(37, 4, 15, 20, 5, 40),
-(37, 6, 14, 15, 15, 40),
-(37, 9, 18, 3, 15, 40),
-(38, 4, 28, 19, 15, 40),
-(38, 6, 28, 17, 3, 40),
-(38, 9, 9, 5, 7, 40),
-(39, 4, 36, 4, 4, 40),
-(39, 6, 2, 3, 14, 40),
-(39, 9, 39, 10, 4, 40),
-(40, 4, 32, 4, 8, 40),
-(40, 6, 16, 8, 6, 40),
-(40, 9, 18, 7, 8, 40),
-(41, 5, 16, 17, 17, 40),
-(42, 5, 31, 20, 8, 40),
-(43, 5, 24, 18, 20, 40),
-(44, 5, 10, 4, 5, 40),
-(45, 5, 0, 12, 12, 40),
-(46, 5, 10, 2, 11, 40),
-(47, 5, 28, 5, 7, 40),
-(48, 5, 21, 9, 8, 40),
-(49, 5, 21, 1, 1, 40),
-(50, 5, 12, 17, 13, 40);
+INSERT INTO `Performance` (`MembreID`, `RencontreID`, `Points`, `Assists`, `Rebonds`, `MinutesJouees`) VALUES
+(1, 1, 10, 6, 9, 40),
+(1, 2, 36, 18, 12, 40),
+(2, 1, 1, 20, 6, 40),
+(2, 2, 30, 15, 16, 40),
+(3, 1, 1, 6, 14, 40),
+(3, 2, 20, 6, 11, 40),
+(4, 1, 32, 20, 1, 40),
+(4, 2, 32, 14, 7, 40),
+(5, 1, 33, 6, 12, 40),
+(5, 2, 34, 17, 9, 40),
+(6, 1, 39, 13, 9, 40),
+(6, 3, 37, 15, 6, 40),
+(7, 1, 40, 7, 18, 40),
+(7, 3, 38, 18, 13, 40),
+(8, 1, 32, 11, 13, 40),
+(8, 3, 19, 18, 6, 40),
+(9, 1, 17, 16, 14, 40),
+(9, 3, 10, 2, 11, 40),
+(10, 1, 21, 11, 6, 40),
+(10, 3, 37, 10, 10, 40),
+(11, 2, 8, 6, 1, 40),
+(11, 3, 1, 20, 10, 40),
+(11, 11, 20, 16, 13, 40),
+(12, 2, 6, 13, 14, 40),
+(12, 3, 19, 19, 13, 40),
+(12, 11, 30, 9, 17, 40),
+(13, 2, 7, 3, 16, 40),
+(13, 3, 6, 7, 6, 40),
+(13, 11, 23, 1, 5, 40),
+(14, 2, 5, 1, 7, 40),
+(14, 3, 26, 16, 12, 40),
+(14, 11, 18, 1, 7, 40),
+(15, 2, 35, 17, 13, 40),
+(15, 3, 6, 3, 18, 40),
+(15, 11, 6, 3, 20, 40),
+(16, 4, 32, 4, 12, 40),
+(16, 5, 27, 7, 1, 40),
+(17, 4, 18, 4, 15, 40),
+(17, 5, 23, 16, 8, 40),
+(18, 4, 34, 20, 19, 40),
+(18, 5, 29, 16, 1, 40),
+(19, 4, 24, 17, 4, 40),
+(19, 5, 27, 13, 19, 40),
+(20, 4, 7, 5, 16, 40),
+(20, 5, 13, 17, 9, 40),
+(21, 4, 24, 11, 5, 40),
+(21, 6, 23, 18, 18, 40),
+(22, 4, 14, 18, 6, 40),
+(22, 6, 13, 10, 13, 40),
+(23, 4, 3, 18, 6, 40),
+(23, 6, 26, 7, 13, 40),
+(24, 4, 11, 2, 15, 40),
+(24, 6, 9, 12, 17, 40),
+(25, 4, 18, 13, 12, 40),
+(25, 6, 24, 11, 6, 40),
+(26, 5, 33, 3, 6, 40),
+(26, 6, 40, 4, 14, 40),
+(27, 5, 33, 10, 8, 40),
+(27, 6, 15, 3, 1, 40),
+(28, 5, 19, 17, 2, 40),
+(28, 6, 26, 8, 1, 40),
+(29, 5, 5, 15, 11, 40),
+(29, 6, 34, 6, 2, 40),
+(30, 5, 32, 20, 3, 40),
+(30, 6, 27, 12, 2, 40),
+(31, 7, 27, 9, 12, 40),
+(31, 8, 40, 13, 1, 40),
+(32, 7, 40, 1, 11, 40),
+(32, 8, 36, 7, 1, 40),
+(33, 7, 16, 11, 13, 40),
+(33, 8, 16, 10, 12, 40),
+(34, 7, 31, 3, 19, 40),
+(34, 8, 17, 10, 10, 40),
+(35, 7, 31, 18, 17, 40),
+(35, 8, 38, 14, 1, 40),
+(36, 7, 20, 5, 13, 40),
+(36, 9, 30, 6, 15, 40),
+(37, 7, 18, 6, 15, 40),
+(37, 9, 6, 13, 15, 40),
+(38, 7, 6, 3, 15, 40),
+(38, 9, 32, 10, 14, 40),
+(39, 7, 37, 7, 8, 40),
+(39, 9, 18, 19, 3, 40),
+(40, 7, 20, 5, 14, 40),
+(40, 9, 19, 7, 7, 40),
+(41, 8, 2, 13, 11, 40),
+(41, 9, 9, 10, 5, 40),
+(41, 10, 9, 8, 7, 40),
+(42, 8, 7, 1, 3, 40),
+(42, 9, 19, 17, 15, 40),
+(42, 10, 14, 18, 8, 40),
+(43, 8, 1, 6, 5, 40),
+(43, 9, 39, 14, 14, 40),
+(43, 10, 39, 11, 9, 40),
+(44, 8, 34, 3, 6, 40),
+(44, 9, 21, 17, 20, 40),
+(44, 10, 29, 15, 11, 40),
+(45, 8, 30, 3, 13, 40),
+(45, 9, 35, 18, 13, 40),
+(45, 10, 40, 3, 4, 40),
+(46, 10, 15, 17, 1, 40),
+(46, 11, 1, 7, 4, 40),
+(47, 10, 22, 7, 9, 40),
+(47, 11, 6, 8, 16, 40),
+(48, 10, 9, 19, 12, 40),
+(48, 11, 9, 14, 4, 40),
+(49, 10, 26, 20, 16, 40),
+(49, 11, 22, 2, 14, 40),
+(50, 10, 10, 13, 8, 40),
+(50, 11, 40, 7, 13, 40);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `Rencontre`
+-- Table structure for table `Rencontre`
 --
 
 CREATE TABLE `Rencontre` (
@@ -559,37 +605,39 @@ CREATE TABLE `Rencontre` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `Rencontre`
+-- Dumping data for table `Rencontre`
 --
 
 INSERT INTO `Rencontre` (`RencontreID`, `DateRencontre`, `ScoreEquipe1`, `ScoreEquipe2`, `Lieu`) VALUES
-(1, '2024-10-13 18:00:00', 127, 105, 'Boston'),
-(2, '2024-10-16 12:00:00', 90, 105, 'Cleveland'),
-(3, '2024-11-05 09:00:00', 109, 109, 'Denver'),
-(4, '2024-11-25 19:00:00', 125, 130, 'Phoenix'),
-(5, '2024-11-29 15:00:00', 110, 85, 'Miami'),
-(6, '2024-12-01 13:00:00', 130, 105, 'Boston'),
-(7, '2024-12-03 21:00:00', 106, 120, 'San Francisco'),
-(8, '2024-12-29 18:06:00', 110, 118, 'Los Angeles'),
-(9, '2024-12-30 18:00:00', 135, 90, 'Cleveland');
+(1, '2025-02-02 14:00:00', NULL, NULL, 'Boston'),
+(2, '2025-03-14 18:00:00', 115, 119, 'Los Angeles'),
+(3, '2025-03-18 20:00:00', 104, 96, 'Los Angeles'),
+(4, '2025-01-25 08:00:00', 122, 121, 'Milwuakee'),
+(5, '2025-12-02 19:00:00', 105, 121, 'Cleveland'),
+(6, '2025-04-03 15:00:00', 115, 85, 'Denver'),
+(7, '2025-05-02 08:11:00', 155, 95, 'Dallas'),
+(8, '2025-11-01 18:59:00', 112, 95, 'Miami'),
+(9, '2025-04-03 23:00:00', 125, 120, 'Miami'),
+(10, '2025-04-04 20:00:00', 115, 125, 'San Antonio'),
+(11, '2025-04-02 16:00:00', 115, 112, 'Los Angeles');
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `ROLE`
+-- Table structure for table `Role`
 --
 
-CREATE TABLE `ROLE` (
-  `idRole` int(11) NOT NULL,
+CREATE TABLE `Role` (
+  `RoleID` int(11) NOT NULL,
   `NomRole` varchar(255) NOT NULL,
   `Description` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `ROLE`
+-- Dumping data for table `Role`
 --
 
-INSERT INTO `ROLE` (`idRole`, `NomRole`, `Description`) VALUES
+INSERT INTO `Role` (`RoleID`, `NomRole`, `Description`) VALUES
 (1, 'Admin', 'Administrateur de l\'application.'),
 (2, 'Manager', 'Peut accéder a la partie management des jeux.'),
 (3, 'Coach', 'Peut créer et ajouter des jouers aux entraînements. '),
@@ -600,209 +648,210 @@ INSERT INTO `ROLE` (`idRole`, `NomRole`, `Description`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `Users`
+-- Table structure for table `User`
 --
 
-CREATE TABLE `Users` (
-  `User_ID` int(20) NOT NULL,
+CREATE TABLE `User` (
+  `UserID` int(20) NOT NULL,
   `Login` varchar(255) NOT NULL,
   `Password` varchar(255) NOT NULL,
   `Mail` varchar(255) NOT NULL,
+  `DateCreation` datetime DEFAULT NULL,
   `Code` varchar(255) DEFAULT NULL,
   `DateExp` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `Users`
+-- Dumping data for table `User`
 --
 
-INSERT INTO `Users` (`User_ID`, `Login`, `Password`, `Mail`, `Code`, `DateExp`) VALUES
-(1, 'Admin', '$2y$10$axFJTj50rLwv6B09u4hpLOPoLvyxZWjMCvC7K.XW6O4jQyG3djthq', 'adjedjm@saintjo.org', NULL, NULL),
-(2, 'Usere5', '$2y$10$qtABqG7dOvAMSvbbdcmPnOm6S5YBedvDHydekxGAud2rVuWcnw8hy', 'adjedjm@saintjo.org', NULL, NULL),
-(3, 'Coach_Merlin', '$2y$10$mal3GH7L2R6AfKekBEfAm.EZWBieu/cU.piCnS6X1pai6OsvWYdaC', 'Lecoachmerlinlegoat@gmail.goat', NULL, NULL),
-(4, 'Patrick', '$2y$10$OEUN5CJh26RvOSZK3/xJ6.I9g.fTve.SLf7LvJ1q1JOjwRQcHBGfy', 'Patrickmichelin@michelin.michelin', NULL, NULL),
-(5, 'Jean', '$2y$10$BPUmnXncBsIz0WJk/IbIDu4yjNyAp9829.35bHhPbmwuR5O9VoMWu', 'jeanpatrick@patrick@patrick', NULL, NULL),
-(6, 'test', '$2y$10$bqmspuEGmP.FsXbZJ5kJvuEA3X2PaCaQd9til4yBnFARBJZH8P2mS', 'test@test.com', NULL, NULL),
-(7, 'Popo', '$2y$10$iHmclFtWSFF/hB3pMKiCo.G9z9p5V69mwJaf6DvqAo1Z1NIz/BKBC', 'Popo@gmail.net', NULL, NULL);
+INSERT INTO `User` (`UserID`, `Login`, `Password`, `Mail`, `DateCreation`, `Code`, `DateExp`) VALUES
+(1, 'Administrator', '$2y$10$LxDxgpooy3ca1oHipMhe1uSP2jbm2Gu9c67Z9MNnEs.ZJsqIpdHc6', 'adminaccount@adminaccount.org', '2025-04-06 00:00:00', NULL, NULL),
+(2, 'Manager-Account', '$2y$10$TxwNAKFHSqTOTuCKiOVh7eSwVoPErR4siRdlDA7C3EV.P3R317c0u', 'manager@manager-account.org', '2025-04-06 00:00:00', NULL, NULL),
+(3, 'Coach-Account', '$2y$10$/IbGkeNCEhmsr08BPN2NOerBqm5K/TKWvEAk3Vgc7IpkCvBuNV2rG', 'Coach@coach-account.org', '2025-04-06 00:00:00', NULL, NULL),
+(4, 'Assistant-Account', '$2y$10$Yva6FRZE3cOblHgWlHU8de5oHq7sdBwVDuuLIV7t95SYTOmZacp7e', 'Assistant@assistant-account.org', '2025-04-06 00:00:00', NULL, NULL),
+(5, 'Player-Account', '$2y$10$KVc201G7ghP.h9enShrz3etIrRMcExGRr/iKt76tBGZ7KoFU/aH82', 'Player@player-account.org', '2025-04-06 00:00:00', NULL, NULL),
+(6, 'User-Account', '$2y$10$tfmnmAquBrWX8PmWUYxdRuBZ9Rx/XztxZFwFThJkaKQ9c09q1k4N6', 'User@user-account.org', '2025-04-06 00:00:00', NULL, NULL);
 
 --
--- Index pour les tables déchargées
+-- Indexes for dumped tables
 --
 
 --
--- Index pour la table `ACCEDER`
+-- Indexes for table `Acceder`
 --
-ALTER TABLE `ACCEDER`
-  ADD PRIMARY KEY (`idPage`,`idRole`),
-  ADD KEY `idRole` (`idRole`);
+ALTER TABLE `Acceder`
+  ADD PRIMARY KEY (`PageID`,`RoleID`),
+  ADD KEY `idRole` (`RoleID`);
 
 --
--- Index pour la table `DISPOSER`
+-- Indexes for table `Disposer`
 --
-ALTER TABLE `DISPOSER`
-  ADD PRIMARY KEY (`idRole`,`User_ID`),
-  ADD KEY `idUtilisateur` (`User_ID`);
+ALTER TABLE `Disposer`
+  ADD PRIMARY KEY (`RoleID`,`UserID`),
+  ADD KEY `idUtilisateur` (`UserID`);
 
 --
--- Index pour la table `Entrainement`
+-- Indexes for table `Entrainement`
 --
 ALTER TABLE `Entrainement`
   ADD PRIMARY KEY (`EntrainementID`);
 
 --
--- Index pour la table `Equipe`
+-- Indexes for table `Equipe`
 --
 ALTER TABLE `Equipe`
   ADD PRIMARY KEY (`EquipeID`);
 
 --
--- Index pour la table `JOUER`
+-- Indexes for table `Jouer`
 --
-ALTER TABLE `JOUER`
+ALTER TABLE `Jouer`
   ADD PRIMARY KEY (`RencontreID`,`EquipeID`),
   ADD KEY `JOUER_Equipe0_FK` (`EquipeID`);
 
 --
--- Index pour la table `Membre`
+-- Indexes for table `Membre`
 --
 ALTER TABLE `Membre`
   ADD PRIMARY KEY (`MembreID`);
 
 --
--- Index pour la table `MembresEquipe`
+-- Indexes for table `MembresEquipe`
 --
 ALTER TABLE `MembresEquipe`
   ADD PRIMARY KEY (`EquipeID`,`MembreID`),
   ADD KEY `MembresEquipe_Membre0_FK` (`MembreID`);
 
 --
--- Index pour la table `PAGE`
+-- Indexes for table `Page`
 --
-ALTER TABLE `PAGE`
-  ADD PRIMARY KEY (`idPage`),
+ALTER TABLE `Page`
+  ADD PRIMARY KEY (`PageID`),
   ADD UNIQUE KEY `PAGE_AK` (`NomPage`);
 
 --
--- Index pour la table `PARTICIPER`
+-- Indexes for table `Participer`
 --
-ALTER TABLE `PARTICIPER`
+ALTER TABLE `Participer`
   ADD PRIMARY KEY (`EntrainementID`,`MembreID`),
   ADD KEY `PARTICIPER_Membre0_FK` (`MembreID`);
 
 --
--- Index pour la table `PERFORMANCE`
+-- Indexes for table `Performance`
 --
-ALTER TABLE `PERFORMANCE`
+ALTER TABLE `Performance`
   ADD PRIMARY KEY (`MembreID`,`RencontreID`),
   ADD KEY `PERFORMANCE_Rencontre0_FK` (`RencontreID`);
 
 --
--- Index pour la table `Rencontre`
+-- Indexes for table `Rencontre`
 --
 ALTER TABLE `Rencontre`
   ADD PRIMARY KEY (`RencontreID`);
 
 --
--- Index pour la table `ROLE`
+-- Indexes for table `Role`
 --
-ALTER TABLE `ROLE`
-  ADD PRIMARY KEY (`idRole`);
+ALTER TABLE `Role`
+  ADD PRIMARY KEY (`RoleID`);
 
 --
--- Index pour la table `Users`
+-- Indexes for table `User`
 --
-ALTER TABLE `Users`
-  ADD PRIMARY KEY (`User_ID`);
+ALTER TABLE `User`
+  ADD PRIMARY KEY (`UserID`),
+  ADD UNIQUE KEY `Mail` (`Mail`);
 
 --
--- AUTO_INCREMENT pour les tables déchargées
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT pour la table `Entrainement`
+-- AUTO_INCREMENT for table `Entrainement`
 --
 ALTER TABLE `Entrainement`
-  MODIFY `EntrainementID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `EntrainementID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT pour la table `Equipe`
+-- AUTO_INCREMENT for table `Equipe`
 --
 ALTER TABLE `Equipe`
   MODIFY `EquipeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT pour la table `Membre`
+-- AUTO_INCREMENT for table `Membre`
 --
 ALTER TABLE `Membre`
   MODIFY `MembreID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
--- AUTO_INCREMENT pour la table `PAGE`
+-- AUTO_INCREMENT for table `Page`
 --
-ALTER TABLE `PAGE`
-  MODIFY `idPage` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+ALTER TABLE `Page`
+  MODIFY `PageID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
--- AUTO_INCREMENT pour la table `Rencontre`
+-- AUTO_INCREMENT for table `Rencontre`
 --
 ALTER TABLE `Rencontre`
-  MODIFY `RencontreID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `RencontreID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT pour la table `ROLE`
+-- AUTO_INCREMENT for table `Role`
 --
-ALTER TABLE `ROLE`
-  MODIFY `idRole` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+ALTER TABLE `Role`
+  MODIFY `RoleID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT pour la table `Users`
+-- AUTO_INCREMENT for table `User`
 --
-ALTER TABLE `Users`
-  MODIFY `User_ID` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+ALTER TABLE `User`
+  MODIFY `UserID` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- Contraintes pour les tables déchargées
+-- Constraints for dumped tables
 --
 
 --
--- Contraintes pour la table `ACCEDER`
+-- Constraints for table `Acceder`
 --
-ALTER TABLE `ACCEDER`
-  ADD CONSTRAINT `pj_ACCEDER_ibfk_1` FOREIGN KEY (`idPage`) REFERENCES `PAGE` (`idPage`),
-  ADD CONSTRAINT `pj_ACCEDER_ibfk_2` FOREIGN KEY (`idRole`) REFERENCES `ROLE` (`idRole`);
+ALTER TABLE `Acceder`
+  ADD CONSTRAINT `pj_ACCEDER_ibfk_1` FOREIGN KEY (`PageID`) REFERENCES `Page` (`PageID`),
+  ADD CONSTRAINT `pj_ACCEDER_ibfk_2` FOREIGN KEY (`RoleID`) REFERENCES `Role` (`RoleID`);
 
 --
--- Contraintes pour la table `DISPOSER`
+-- Constraints for table `Disposer`
 --
-ALTER TABLE `DISPOSER`
-  ADD CONSTRAINT `DISPOSER_ibfk_1` FOREIGN KEY (`idRole`) REFERENCES `ROLE` (`idRole`),
-  ADD CONSTRAINT `DISPOSER_ibfk_2` FOREIGN KEY (`User_ID`) REFERENCES `Users` (`User_ID`);
+ALTER TABLE `Disposer`
+  ADD CONSTRAINT `Disposer_ibfk_1` FOREIGN KEY (`RoleID`) REFERENCES `Role` (`RoleID`),
+  ADD CONSTRAINT `Disposer_ibfk_2` FOREIGN KEY (`UserID`) REFERENCES `User` (`UserID`);
 
 --
--- Contraintes pour la table `JOUER`
+-- Constraints for table `Jouer`
 --
-ALTER TABLE `JOUER`
+ALTER TABLE `Jouer`
   ADD CONSTRAINT `JOUER_Equipe0_FK` FOREIGN KEY (`EquipeID`) REFERENCES `Equipe` (`EquipeID`),
   ADD CONSTRAINT `JOUER_Rencontre_FK` FOREIGN KEY (`RencontreID`) REFERENCES `Rencontre` (`RencontreID`);
 
 --
--- Contraintes pour la table `MembresEquipe`
+-- Constraints for table `MembresEquipe`
 --
 ALTER TABLE `MembresEquipe`
   ADD CONSTRAINT `MembresEquipe_Equipe_FK` FOREIGN KEY (`EquipeID`) REFERENCES `Equipe` (`EquipeID`),
   ADD CONSTRAINT `MembresEquipe_Membre0_FK` FOREIGN KEY (`MembreID`) REFERENCES `Membre` (`MembreID`);
 
 --
--- Contraintes pour la table `PARTICIPER`
+-- Constraints for table `Participer`
 --
-ALTER TABLE `PARTICIPER`
+ALTER TABLE `Participer`
   ADD CONSTRAINT `PARTICIPER_Entrainement_FK` FOREIGN KEY (`EntrainementID`) REFERENCES `Entrainement` (`EntrainementID`),
   ADD CONSTRAINT `PARTICIPER_Membre0_FK` FOREIGN KEY (`MembreID`) REFERENCES `Membre` (`MembreID`);
 
 --
--- Contraintes pour la table `PERFORMANCE`
+-- Constraints for table `Performance`
 --
-ALTER TABLE `PERFORMANCE`
+ALTER TABLE `Performance`
   ADD CONSTRAINT `PERFORMANCE_Membre_FK` FOREIGN KEY (`MembreID`) REFERENCES `Membre` (`MembreID`),
   ADD CONSTRAINT `PERFORMANCE_Rencontre0_FK` FOREIGN KEY (`RencontreID`) REFERENCES `Rencontre` (`RencontreID`);
 COMMIT;
