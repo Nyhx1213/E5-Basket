@@ -57,7 +57,7 @@ catch (PDOException $e) {
             <div class="container"> 
                     <h1><?php echo $_SESSION['login']?></h1>
                     <h2>Date de creation de compte: <?php echo $date; ?> </h2>
-                    <h2>Adresse Mail: <?php echo $row['Mail'] </h2>
+                    <h2>Adresse Mail: <?php echo $row['Mail'] ?></h2>
 
             </div>
         </main>
