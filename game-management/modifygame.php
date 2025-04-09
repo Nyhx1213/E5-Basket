@@ -117,6 +117,7 @@ else if (!isset($_SESSION['matchid'])) {
                     
                     //Puts the user input into datetime format for comparison.
                     $userDate = DateTime::createFromFormat('Y-m-d\TH:i', $_POST['date']);
+                    $gameDate = $userDate->format('Y-m-d H:i:s');
                                                 
                     if ($userDate > $datelimitadd || $userDate < $datelimitsub) {
                         echo '<h2 class="message error">Please input a valid date</h2>';
@@ -131,7 +132,7 @@ else if (!isset($_SESSION['matchid'])) {
                     $statementupdaterencontre->bindParam(':scoreteam1', $_POST['teamscore1']);
                     $statementupdaterencontre->bindParam(':scoreteam2', $_POST['teamscore2']);
                     $statementupdaterencontre->bindParam(':lieu', $_POST['location']);
-                    $statementupdaterencontre->bindParam(':date', $userDate);
+                    $statementupdaterencontre->bindParam(':date', $gameDate);
                     $statementupdaterencontre->execute();
 
                     if ($_POST['teamscore1'] > $_POST['teamscore2']){

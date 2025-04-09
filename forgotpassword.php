@@ -73,7 +73,7 @@ session_start();
                             // Send the email with the code
                             $to = $_POST['mail'];
                             $subject = 'Password Retrieval Link';
-                            $message = 'Click the link below to retrieve your password: '.$url.'getpasswordcode.php?code=' . $code;
+                            $message = 'Click the link below to retrieve your password: '.$url.'/getpassword.php?code=' . $code;
                             $headers = array(
                                 'From' => 'do.not.reply@yourwebsite.com',
                                 'Reply-To' => 'do.not.reply@yourwebsite.com',
