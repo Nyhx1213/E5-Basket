@@ -1,4 +1,4 @@
-# Système de Gestion du Basketball
+# Gestion d'équipes de basket
 
 ## Introduction
 Cette application est conçue pour gérer divers aspects d’une organisation de basketball, y compris la gestion des utilisateurs, des entraînements et des matchs. Le système inclut des permissions basées sur les rôles afin d'assurer un contrôle d'accès approprié.
